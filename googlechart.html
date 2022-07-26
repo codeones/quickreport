@@ -1,0 +1,51 @@
+<html>
+
+<head>
+  <!--Load the AJAX API-->
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+
+    // Load the Visualization API and the corechart package.
+    google.charts.load('current', { 'packages': ['corechart'] });
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(drawChart);
+   var chrt= document.getElementById("chart_div")
+   chrt.style
+    // Callback that creates and populates a data table,
+    // instantiates the pie chart, passes in the data and
+    // draws it.
+    function drawChart() {
+
+      // Create the data table.
+      var data = new google.visualization.DataTable();
+      data.addColumn('DOT',`<%--%>`);
+      data.addColumn('number', 'Slices');
+      data.addRows([
+        ['Mushrooms', 20],
+        ['Onions', 940],
+
+      ]);
+
+      // Set chart options
+      var options = {
+        'title': 'Asset Chart',
+        'width': 400,
+        'height': 300,
+        backgroundColor: 'grey',
+        is3D: true
+      };
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    }
+  </script>
+</head>
+
+<body>
+  <!--Div that will hold the pie chart-->
+  <div id="chart_div" style="color: rgb(247, 10, 10);width: 100px;height: 100px;"></div>
+</body>
+
+</html>

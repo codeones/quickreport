@@ -1,0 +1,330 @@
+
+
+<!DOCTYPE html>
+
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Sign In</title>
+        <link rel="stylesheet" href="Footer.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crete+Round&family=Roboto+Mono:wght@700&family=Teko:wght@300&display=swap" rel="stylesheet"> 
+<script src="https://kit.fontawesome.com/6e5493fd32.js" crossorigin="anonymous"></script>
+
+    </head>
+    <style>
+a:link{
+color: white;
+text-decoration: none;
+    }
+    a:valid{
+        color: white;
+        text-decoration: none;
+    }
+    a:visited{
+        color: white;
+        text-decoration: none;
+    }
+    .fas{
+        font-size: xx-large;
+    }
+    a:hover{
+color: orange;
+text-decoration: none;
+    }
+.mainmenu{
+    position: fixed;
+    top: 0px;
+    left: 0;
+    right: 0;
+        height: 80px;
+        width: 100%;
+        
+        background-color: #4d4b4b;
+        margin: 0;
+        padding: 0;
+      
+    }input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+    span{
+    font-size: xx-large;
+    padding: 25px;
+    }
+    .home{
+        margin-left: 15%;
+    }
+        body{
+            display: block;
+            /* justify-content: center; */
+            background-color: rgb(17, 17, 16);
+/* background: url(https://media.istockphoto.com/photos/geometric-shapes-structure-on-empty-concrete-floor-with-white-wall-picture-id996693064?k=20&m=996693064&s=612x612&w=0&h=pjOzlyV-Xc0LJ_LcSmdnDkFezFaQQWL_RslP-rvZRSU=) ;  */
+background-repeat: no-repeat;
+width: 100vw;
+height: 100vh;
+  }
+        ::placeholder{
+            color: rgb(17, 17, 17) !important;
+        }
+        .hrt{
+            margin-top: -30px;
+            
+        }
+        h1{
+            text-align: center;
+            margin-top: 0px;
+            color: black ;
+            /* background-color: salmon; */
+        }
+        .formcenter{
+        display:flex;
+	justify-content: center;
+    margin-top: 3%;
+    }
+    input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+        form{
+            color: white;
+        border-radius: 10px;
+        border: 1px solid rgb(60, 13, 228);
+        width: 380px;
+        height: auto;
+        /* margin-left: 30%;
+        margin-right: 20%; */
+        margin-top: 100px;
+        padding: 5px 10px;
+        justify-content: center;
+        font-size: large;
+        font-weight: bolder;
+        background-color: rgb(166, 192, 189); 
+        box-shadow: 0px 0px   10px 15px rgb(166, 192, 189);
+        text-decoration: wavy;
+        font-family: 'Crete Round', serif;
+        font-weight: 400px;
+        }
+        ::placeholder{
+            color: rgb(196, 171, 146) !important;
+         word-wrap: break-word;
+        }
+       
+        .inpt{ 
+            text-decoration:upercase;
+            height:30px;
+            width: 90%;
+            padding: 5px;
+           justify-content: center;
+            margin-top: 3%;
+            border: 3px solid rgb(250, 250, 248);
+            border-radius: 2px;
+            text-align: center;
+            background-color: rgb(47, 48, 48);
+            border-radius: 20px;
+            /* box-shadow: 0px 0px  0px 2px rgb(14, 13, 13); */
+            transition: all;
+            transition-duration: 10s;
+            font-style: italic;
+            color:rgb(247, 246, 244);
+            font-size: large;
+            font-family: monospace;
+             margin: 5px;
+            
+        }
+       
+        div{
+            padding: auto;
+            margin: 0%;
+        }
+        .gender{
+            color: black;
+           
+        }
+        #reset{
+            color:rgb(10, 1, 1);
+            padding: 1%;
+            margin-left:auto;
+            height: 50px;
+            width: 100px;
+            border-radius: 50px;
+            background-color: rgb(166, 192, 189);
+            box-shadow: 2px 2px 3px 2px rgb(206, 206, 204);
+            font-family: 'Crete Round', serif;
+            display: inline;
+            font-size: large;
+            border: 3px solid red;
+            transition: all;
+            transition-duration: .3s;
+            position: relative;
+            left: 160px;
+        }
+        #submit{
+            margin-top: 10px;
+            padding: 5px;
+            border-radius: 50px;
+            height: 50px;
+            width: 100px;
+            background-color: rgb(255, 123, 0);
+            font-family: 'Crete Round', serif;
+            display: inline;
+            font-size: large;
+            box-shadow: 2px 2px 3px 2px rgb(228, 228, 221);
+            background-color: rgb(240, 243, 241);
+          word-spacing: 20px;
+          border: 3px solid rgb(18, 223, 155);
+          background-color: black;
+          color: white;
+           }
+        #submit:hover{
+            cursor: pointer;
+            background-color: rgb(18, 223, 155);
+            color: aliceblue;
+        }
+        #reset:hover{
+            cursor: pointer;
+            background-color: red;
+            color:white;
+            font-size: large;
+            border: 3px solid white;
+        }
+        .message{
+        
+        width: auto;
+        height: 50px;
+        text-align: center;
+        justify-content: center;
+        margin: -4px;
+        border-radius: 10px;
+        color: rgb(19, 18, 17);
+        font-family: 'Roboto Mono', monospace;
+
+    }
+    hr{
+        margin-left: -5px;
+    }
+p{margin:-10px ;
+    padding: 15px;}
+    .a{
+        padding: 50px;
+    }
+    
+        </style>
+  
+    <body>
+        <div class="mainmenu" ><br>
+            <br>
+            <logo > <m style="color: orangered;  font-weight: bold; font-size: x-large; ">Q</m> <m style="color:wheat ;">U</m> <m style="color:white ;">I</m> <m style="color: greenyellow;">C</m> <m style="color:orangered;">K</m>  <m style="color:rgb(248, 247, 246) ;">Report</m>  </logo>
+                <span class="home"><a href="/"><i title="Quick Report Home" class="fas fa-home"></i></a></span>
+                <!-- <span><a href="/dash-bord"><i title="PortFolio" class="fas fa-chart-line"></i></a></span> -->
+                 <span ><a href="/dash-bord"><i title="DashBord" class="fas fa-chart-pie"></i></a></span>
+                <span ><a href="/register"><i title="User" class="far fa-user"></i></a></span>
+                <script src="https://widgets.coingecko.com/coingecko-coin-price-marquee-widget.js"></script>
+            <coingecko-coin-price-marquee-widget  coin-ids="bitcoin,eos,ethereum,litecoin,ripple,biconomy,dog" currency="inr" background-color="white" locale="en"></coingecko-coin-price-marquee-widget>
+            </div>
+               <div class="formcenter">
+       <form action="" method="post" autocomplete="off">
+           <h1>Register User</h1>
+           <hr class="hrt">
+                <input class="inpt" autocomplete="false" type="text" placeholder="Username" name="userName" onkeydown="validUser()" onkeyup="validUser()" required><br>
+           <input class="inpt" type="text" autocomplete="false" onkeypress="return onlyNumberKey(event)" placeholder="first Name" name="firstName" required><br>
+        
+          <input  class="inpt"type="text"  autocomplete="false" placeholder="Last Name" name="lastName" onkeypress="return onlyNumberKey(event)" required> <br>
+           <input  class="inpt" type="Email"  autocomplete="false" placeholder="Email Id" name="emailId" required><br><!-- comment -->
+           <input  class="inpt" type="number"  autocomplete="false" placeholder="Mobile Number" name="mobileNumber" required><br><!-- comment -->
+           <b class="merr"></b>
+        
+                  <input id="pass" class="inpt" autocomplete="false"  type="password" placeholder="passwword" name="password" ><br>
+                  <input id="confirm" onkeydown="check()" onkeyup="check()"  type="password" class="inpt"  placeholder="Confirm password" required><br>
+                  <b id="err" style="color: rgb(248, 10, 10); text-align: left;" ></b>
+                  <br>
+        <!-- Course : C:<input type"selectbox" name="course" >C++:<input type"selectbox"name="course"  >JAVA:<input type"checkbox" name="course"  > PHP: <input  name="course" type"checkbox" ><br> -->
+        <div class="showhide"><a style="color: rgb(3, 3, 3); margin: 0;">show passwods </a><input type="checkbox" id="hideshow" onclick="show()"></div> 
+       
+      <!-- <div class="gender">  Gender  <input type="radio" placeholder=" GENDER" name="gender" value="m" style="padding:0; margin: 0;" required>M
+        <input type="radio" name="gender" value="f" >F<br></div> -->
+        <button  id="submit" onclick="err()" type="submit"> Submit</button>
+        <button id="reset" type="reset">Reset</button>
+        <hr>
+        <div class="message">
+        <p>Have A Account <a href="/login">LOGIN</a></p>
+        </div>
+        </form>
+        
+    </div>
+    
+
+    <script>
+        
+
+         function show()
+    {
+var hide=document.getElementById("pass")
+var con=document.getElementById("confirm")
+if (hide.type === "password"&&con.type=="password") {
+    hide.type = "text";
+    con.type = "text";
+  } else {
+    hide.type = "password";
+    con.type = "password";
+  }
+
+    }
+         function onlyNumberKey(evt) {
+          
+            evt = (evt) ? evt : event;
+       var charCode = (evt.charCode) ? evt.charCode : ((evt.keyCode) ? evt.keyCode :
+          ((evt.which) ? evt.which : 0));
+       if (charCode > 31 && (charCode < 65 || charCode > 90) &&
+          (charCode < 97 || charCode > 122)) {
+        //alert("Enter letters only. numers not allowed");
+          return false;
+       }
+       return true;
+      }
+
+      function err()
+        {
+            var pass=document.getElementById("pass").value;
+            var conf=document.getElementById("confirm").value;
+            if(pass!=conf)
+            {
+alert("Password Does Not Match")
+            }
+        }
+        function check()
+        {
+            var pass=document.getElementById("pass").value;
+            var conf=document.getElementById("confirm").value;
+            if(pass!=conf)
+            {
+document.getElementById("err").innerText="Password Not Match "
+            }
+           else if(pass==conf)
+            {
+document.getElementById("err").innerText="Done"
+document.getElementById("err").style.color="black"
+// document.getElementById("err").innerText=""
+
+            }
+        }
+    </script>
+</html>
+
+
+
+
+
+
+
+

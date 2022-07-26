@@ -1,0 +1,732 @@
+[
+ {
+  "Date(UTC)": "2022-07-02 03:18:11",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.764",
+  "Amount": "119.5",
+  "Total": "210.798",
+  "Fee": "0.210798",
+  "Fee Coin": "BUSD"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:18:02",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.765",
+  "Amount": "57.4",
+  "Total": "101.311",
+  "Fee": "0.0574",
+  "Fee Coin": "RUNE"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:18:02",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.765",
+  "Amount": "62.2",
+  "Total": "109.783",
+  "Fee": "0.00038346",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:17:59",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.764",
+  "Amount": "119.7",
+  "Total": "211.1508",
+  "Fee": "0.00073828",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:17:57",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.765",
+  "Amount": "10",
+  "Total": "17.65",
+  "Fee": "0.00006165",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:17:57",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.765",
+  "Amount": "42.9",
+  "Total": "75.7185",
+  "Fee": "0.00026447",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:17:57",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.765",
+  "Amount": "32.4",
+  "Total": "57.186",
+  "Fee": "0.00019974",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:17:57",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.765",
+  "Amount": "34.4",
+  "Total": "60.716",
+  "Fee": "0.00021207",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:17:27",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.764",
+  "Amount": "119.7",
+  "Total": "211.1508",
+  "Fee": "0.00073828",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:17:24",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.764",
+  "Amount": "119.7",
+  "Total": "211.1508",
+  "Fee": "0.00073794",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:17:20",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.763",
+  "Amount": "119.8",
+  "Total": "211.2074",
+  "Fee": "0.00073848",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:17:18",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.764",
+  "Amount": "119.8",
+  "Total": "211.3272",
+  "Fee": "0.00073856",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:17:03",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.763",
+  "Amount": "119.9",
+  "Total": "211.3837",
+  "Fee": "0.00073875",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:16:35",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.765",
+  "Amount": "119.9",
+  "Total": "211.6235",
+  "Fee": "0.00073917",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:15:24",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.765",
+  "Amount": "17.7",
+  "Total": "31.2405",
+  "Fee": "0.00010912",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:15:24",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.765",
+  "Amount": "16.5",
+  "Total": "29.1225",
+  "Fee": "0.00010173",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:15:24",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.765",
+  "Amount": "85.7",
+  "Total": "151.2605",
+  "Fee": "0.00052838",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:15:10",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.765",
+  "Amount": "106.1",
+  "Total": "187.2665",
+  "Fee": "0.0006541",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:15:10",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.765",
+  "Amount": "8",
+  "Total": "14.12",
+  "Fee": "0.00004932",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:15:10",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.765",
+  "Amount": "5.8",
+  "Total": "10.237",
+  "Fee": "0.00003575",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:14:38",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.763",
+  "Amount": "31.7",
+  "Total": "55.8871",
+  "Fee": "0.00019513",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:14:38",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.763",
+  "Amount": "88.3",
+  "Total": "155.6729",
+  "Fee": "0.00054354",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:14:31",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.765",
+  "Amount": "120",
+  "Total": "211.8",
+  "Fee": "0.0007398",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:14:27",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.764",
+  "Amount": "120.1",
+  "Total": "211.8564",
+  "Fee": "0.00073971",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:14:25",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.765",
+  "Amount": "120.1",
+  "Total": "211.9765",
+  "Fee": "0.00074041",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:12:03",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.762",
+  "Amount": "10",
+  "Total": "17.62",
+  "Fee": "0.00006163",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:12:03",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.762",
+  "Amount": "45.5",
+  "Total": "80.171",
+  "Fee": "0.00028044",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:12:03",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.762",
+  "Amount": "64.8",
+  "Total": "114.1776",
+  "Fee": "0.0003994",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:11:59",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.763",
+  "Amount": "35.4",
+  "Total": "62.4102",
+  "Fee": "0.00021823",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:11:59",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.763",
+  "Amount": "84.9",
+  "Total": "149.6787",
+  "Fee": "0.0005234",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:11:56",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.762",
+  "Amount": "56.5",
+  "Total": "99.553",
+  "Fee": "0.00034824",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:11:56",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.762",
+  "Amount": "63.9",
+  "Total": "112.5918",
+  "Fee": "0.00039385",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:11:54",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.763",
+  "Amount": "120.4",
+  "Total": "212.2652",
+  "Fee": "0.00074226",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:10:29",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.766",
+  "Amount": "120.2",
+  "Total": "212.2732",
+  "Fee": "0.00074151",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:10:27",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.767",
+  "Amount": "120.2",
+  "Total": "212.3934",
+  "Fee": "0.00074103",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:06:33",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.765",
+  "Amount": "40.2",
+  "Total": "70.953",
+  "Fee": "0.070953",
+  "Fee Coin": "BUSD"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:06:33",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.765",
+  "Amount": "80.2",
+  "Total": "141.553",
+  "Fee": "0.141553",
+  "Fee Coin": "BUSD"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:06:31",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.766",
+  "Amount": "120.5",
+  "Total": "212.803",
+  "Fee": "0.1205",
+  "Fee Coin": "RUNE"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:06:24",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.765",
+  "Amount": "120.7",
+  "Total": "213.0355",
+  "Fee": "0.2130355",
+  "Fee Coin": "BUSD"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:06:21",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.766",
+  "Amount": "120.8",
+  "Total": "213.3328",
+  "Fee": "0.1208",
+  "Fee Coin": "RUNE"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:05:59",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.765",
+  "Amount": "121",
+  "Total": "213.565",
+  "Fee": "0.213565",
+  "Fee Coin": "BUSD"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:05:56",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.766",
+  "Amount": "15.5",
+  "Total": "27.373",
+  "Fee": "0.0000959",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:05:56",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.766",
+  "Amount": "103.1",
+  "Total": "182.0746",
+  "Fee": "0.1031",
+  "Fee Coin": "RUNE"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:05:56",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.766",
+  "Amount": "2.5",
+  "Total": "4.415",
+  "Fee": "0.00001546",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:04:35",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.766",
+  "Amount": "121.2",
+  "Total": "214.0392",
+  "Fee": "0.2140392",
+  "Fee Coin": "BUSD"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:04:23",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.767",
+  "Amount": "121.3",
+  "Total": "214.3371",
+  "Fee": "0.1213",
+  "Fee Coin": "RUNE"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:04:20",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.766",
+  "Amount": "121.5",
+  "Total": "214.569",
+  "Fee": "0.214569",
+  "Fee Coin": "BUSD"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:04:11",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.766",
+  "Amount": "121.6",
+  "Total": "214.7456",
+  "Fee": "0.1216",
+  "Fee Coin": "RUNE"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:02:36",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.77",
+  "Amount": "121.4",
+  "Total": "214.878",
+  "Fee": "0.214878",
+  "Fee Coin": "BUSD"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:02:33",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.77",
+  "Amount": "103.9",
+  "Total": "183.903",
+  "Fee": "0.1039",
+  "Fee Coin": "RUNE"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:02:33",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.77",
+  "Amount": "17.7",
+  "Total": "31.329",
+  "Fee": "0.00010951",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:02:24",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.77",
+  "Amount": "47.5",
+  "Total": "84.075",
+  "Fee": "0.00029341",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:02:24",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.77",
+  "Amount": "9.1",
+  "Total": "16.107",
+  "Fee": "0.00005621",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:02:24",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.77",
+  "Amount": "15",
+  "Total": "26.55",
+  "Fee": "0.00009265",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:02:24",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.77",
+  "Amount": "50",
+  "Total": "88.5",
+  "Fee": "0.00030885",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:02:20",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.773",
+  "Amount": "121.6",
+  "Total": "215.5968",
+  "Fee": "0.0007524",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:02:05",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.773",
+  "Amount": "100.8",
+  "Total": "178.7184",
+  "Fee": "0.00062401",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:02:05",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.773",
+  "Amount": "20.8",
+  "Total": "36.8784",
+  "Fee": "0.00012876",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-07-02 03:02:03",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.774",
+  "Amount": "121.1",
+  "Total": "214.8314",
+  "Fee": "0.0007493",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-06-30 14:31:34",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.761",
+  "Amount": "19.8",
+  "Total": "34.8678",
+  "Fee": "0.0001247",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-06-30 14:31:27",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.762",
+  "Amount": "19.8",
+  "Total": "34.8876",
+  "Fee": "0.00012459",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-06-30 14:31:24",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.761",
+  "Amount": "19.8",
+  "Total": "34.8678",
+  "Fee": "0.00012488",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-06-30 14:31:19",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.761",
+  "Amount": "19.8",
+  "Total": "34.8678",
+  "Fee": "0.00012459",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-06-30 14:30:52",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.757",
+  "Amount": "29.8",
+  "Total": "52.3586",
+  "Fee": "0.00018753",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-06-30 14:30:49",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.758",
+  "Amount": "29.8",
+  "Total": "52.3884",
+  "Fee": "0.00018751",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-06-30 14:30:32",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.755",
+  "Amount": "39.8",
+  "Total": "69.849",
+  "Fee": "0.00025065",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-06-30 14:30:30",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.756",
+  "Amount": "39.8",
+  "Total": "69.8888",
+  "Fee": "0.00025044",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-06-30 14:29:10",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.754",
+  "Amount": "29.9",
+  "Total": "52.4446",
+  "Fee": "0.00018828",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-06-30 14:29:07",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.755",
+  "Amount": "29.9",
+  "Total": "52.4745",
+  "Fee": "0.00018814",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-06-30 14:28:35",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.755",
+  "Amount": "2.8",
+  "Total": "4.914",
+  "Fee": "0.00001764",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-06-30 14:28:35",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.755",
+  "Amount": "27.2",
+  "Total": "47.736",
+  "Fee": "0.00017138",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-06-30 14:28:35",
+  "Market": "RUNEBUSD",
+  "Type": "SELL",
+  "Price": "1.755",
+  "Amount": "9.8",
+  "Total": "17.199",
+  "Fee": "0.00006174",
+  "Fee Coin": "BNB"
+ },
+ {
+  "Date(UTC)": "2022-06-30 14:28:04",
+  "Market": "RUNEBUSD",
+  "Type": "BUY",
+  "Price": "1.755",
+  "Amount": "39.8",
+  "Total": "69.849",
+  "Fee": "0",
+  "Fee Coin": "BNB"
+ }
+]

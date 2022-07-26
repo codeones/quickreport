@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Return Calculator</title>
+</head>
+<style>
+    body {
+        background: black;
+    }
+
+    .container {
+        display: flex;
+    }
+
+    .investment {
+        max-width: 800px;
+        border: 3px solid orange;
+        border-radius: 5px;
+        margin-left: 25%;
+        display: grid;
+        height: 220px;
+        padding: 3px;
+    }
+
+
+    .roi {
+        max-width: 800px;
+        border: 2px solid olivedrab;
+        border-radius: 5px;
+        margin-left: 2%;
+        height: 220px;
+        padding: 3px;
+    }
+
+    input {
+        background-color: black;
+        color: rgb(251, 248, 248);
+    }
+
+    p {
+        font-weight: 600;
+        font-family: 'Courier New';
+        padding-left: 5px;
+        color: rgb(61, 62, 62);
+    }
+
+    .uppercontainer {
+        margin-top: 35px;
+        background-color: rgb(97, 97, 92);
+        max-width: 400px;
+        margin-left: 33%;
+        height: 235px;
+        display: grid;
+        margin-bottom: 5px;
+        border-radius: 3px;
+    }
+
+    .upper {
+        /*upper side input*/
+        background-color: rgb(44, 40, 40);
+        text-align: center;
+        padding: 0;
+        margin-bottom: 1px;
+        height: 40px;
+        border-radius: 5px;
+        margin-left: 2%;
+        border: 3px ridge white;
+        color: white;
+        font-family: monospace;
+        font-weight: bolder;
+        font-size: larger;
+        outline: none;
+        width: 95%;
+    }
+
+    .calculate {
+        margin-top: 0px;
+        width: 50%;
+        margin-left: 25%;
+        height: 50px;
+        background-color: #f7a100;
+        border-radius: 10px;
+        border: none;
+        box-shadow: 4px 2px 1px rgb(190, 185, 185);
+        font-weight: bolder;
+        font-size: large;
+    }
+
+    .calculate:hover {
+        background-color: rgb(34, 245, 6);
+        cursor: pointer;
+    }
+
+    #buy {
+        margin-top: 10px;
+    }
+</style>
+
+<body>
+    <h1 style="color:#f88605 ; text-align:center;">Return Calculator </h1>
+    <div class="uppercontainer">
+        <input type="text" placeholder="buy price" class="upper" id="buy" required />
+        <input type="text" placeholder="Total Amount Which you have invested " class="upper" id="amount" required />
+        <input type="text" placeholder="sell price" class="upper" id="sell" required />
+        <button class="calculate" onclick="cal()">calculate</button>
+    </div>
+    <div class="container">
+
+        <div class="investment">
+            <button
+                style="width: 100.1%; background-color: rgb(161, 166, 166);height: 25px; border: none; margin-top: 0px;font-family: sans-serif;font-weight: bolder;">Investment</button>
+            <p class="buyp" id="buyprice">Buy Price : <input style="border:none; width:100px; border-radius: 2px;"
+                    id="buyp" disabled />
+            </p>
+            <p class="buyp">Units : <input id="units" type="text" style="border:none; width:100px; border-radius: 2px;"
+                    disabled /> </p>
+            <p class="buyp">Invested: <input id="iamount" style="border:none; width:100px; border-radius: 2px;"
+                    type="text" disabled />
+            </p>
+            </p>
+        </div>
+
+
+
+        <div class="roi">
+            <button
+                style="width: 100.1%;background-color: rgb(161, 166, 166); height: 25px;font-family: sans-serif;font-weight: bolder; border: none; margin-top: 0px;">Return</button>
+            <p>Sell price : <input type="text" id="sp" style="border:none; width:100px; border-radius: 2px;" disabled />
+            </p>
+            <p>PNL : <input type="text" id="pp" style="border:none; width:100px; border-radius: 2px;" disabled /> </p>
+            <p>Net Profit :
+                <input type="text" id="profit" style="border:none; width:100px; border-radius: 2px;" disabled />
+            </p>
+            <p>Total :
+                <input type="text" id="principle" style="border:none; width:100px; border-radius: 2px;" disabled />
+            </p>
+
+        </div>
+
+    </div>
+    <div id="return">
+
+        <!-- <p>Total Amount: input#prinncip </p> -->
+    </div>
+</body>
+<script>
+    function cal() {
+        var buyPrice, sellPrice, amount, pnl, finalAmount, pnlValue, Invested, principle;
+        buyPrice = document.getElementById("buy").value;
+        amount = document.getElementById("amount").value;
+        document.getElementById("buyp").value = buyPrice + " ₹"
+        document.getElementById("units").value = amount / buyPrice
+        document.getElementById("iamount").value = amount + " ₹";
+        sellPrice = document.getElementById("sell").value;
+        document.getElementById("sp").value = sellPrice + " ₹";
+        pnl = parseFloat(((sellPrice - buyPrice) / buyPrice) * 100).toFixed(2)
+        console.log("PNL=", pnl);
+        Invested = parseFloat(amount)
+        console.log("amount ====", amount)
+        pnlValue = (pnl * Invested) / 100;
+        console.log(pnlValue)
+        principle = parseFloat((pnl * Invested) / 100) + Invested
+        console.log("principle Amount ====", principle)
+        document.getElementById("pp").value = pnl + " %";
+        if (pnl > 0) {
+            document.getElementById("pp").style.color = "green"
+            document.getElementById("profit").style.color = "green"
+        }
+        if (pnl < 0) {
+            document.getElementById("pp").style.color = "red"
+            document.getElementById("profit").style.color = "red"
+        }
+        else {
+
+        }
+        document.getElementById("principle").value = principle + " ₹";
+        document.getElementById("profit").value = parseInt((pnl * Invested) / 100) + " ₹"
+
+
+    }
+</script>
+
+</html>

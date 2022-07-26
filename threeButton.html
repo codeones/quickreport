@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.all.min.js"></script>
+    <title>three</title>
+</head>
+<style>
+    .swal2-popup {
+        width: 360px;
+        height: 230px;
+        background-color: rgb(49, 49, 49);
+
+    }
+
+
+
+    .buttons {
+        display: flex;
+
+    }
+
+    .funding {
+        background-color: #f88605;
+        color: white;
+        padding: 5px 10px;
+        width: 100px;
+        border-radius: 7px;
+        box-shadow: 2px 2px 1px rgb(105, 104, 104);
+        border: none;
+        margin: 10px;
+        height: 40px;
+        font-weight: bolder;
+        font-size: large;
+    }
+
+    .buysell {
+        background-color: green;
+        color: white;
+        padding: 5px;
+        margin: 10px;
+        width: 100px;
+        border-radius: 7px;
+        box-shadow: 2px 2px 1px grey;
+        border: none;
+        height: 40px;
+        font-weight: bolder;
+        font-size: large;
+    }
+
+
+    .buysell:hover {
+        cursor: pointer;
+        font-weight: bold;
+        box-shadow: none;
+    }
+
+    .funding:hover {
+        cursor: pointer;
+        font-weight: bold;
+        box-shadow: none;
+    }
+
+    .h1a {
+        color: white;
+        margin-bottom: 0px;
+    }
+</style>
+
+<body>
+
+    <script>
+        swal.fire({
+            html: ` <h1 class="h1a">Add Transaction </h1> <br> <div class= "buttons" ><button onclick="funding()" class="funding">Funding</button><button  onclick="buysell()"class="buysell">Buy/Sell</button</div> `,
+            showConfirmButton: false,
+            allowEscapeKey: false,
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            showCancelButton: true,
+
+
+        })
+
+        function funding() {
+            window.location = "/funding"
+        }
+        function buysell() {
+            window.location = "/portfolio"
+
+        }
+    </script>
+</body>
+
+</html>

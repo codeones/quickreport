@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    table{
+        border: 3px solid black;
+        border-collapse: collapse;
+    }
+    tr{
+        border: 3px solid rgb(238, 184, 7);
+    }
+</style>
+<body>
+<table id="tabl">
+    <tr><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th> </tr>
+
+</table>
+<script>
+  
+   var table = document.getElementById("tabl");
+  var row = table.insertRow(0);
+  var cell1 = row.insertCell(0);
+  var cell2 = row.insertCell(1);
+  cell1.innerHTML = "NEW CELL1";
+  cell2.innerHTML = "NEW CELL2";
+
+  var URL1=`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false`
+        fetch(URL1)
+        .then(response =>response.json())
+        .then(responsedata=>{
+            for(var i=0;i<=responsedata.length;i++)
+            {
+            const br=document.createElement("br")
+ const sec=document.getElementById("section");
+ var newdiv=document.createElement("div");
+ 
+ var logo=document.createElement("img");
+ logo.src=responsedata[i].image;
+ logo.style.height="30px";
+                logo.style.position="left";
+                logo.style.borderRadius="50px";
+                var row = table.insertRow(i);
+  
+
+               
+
+
+// var s=responsedata[i].symbol //symbol
+// s=s.toUpperCase()
+// var Symbol=document.createTextNode("\n Symbol:"+s+"\n");
+// var Price=document.createTextNode("\n\n Pricre:"+responsedata[i].current_price+"\n");
+// var Ath=document.createTextNode(responsedata[i].ath);
+//  newdiv.classList.add("divline");
+//  var athParcentage=((( responsedata[i].current_price-responsedata[i].ath)/responsedata[i].ath)*100)
+//  athParcentage=parseFloat(athParcentage).toFixed(3);
+//  athParcentage=athParcentage+"%";
+//  var MarketData=document.createTextNode(+i+1+"."+"\n"+responsedata[i].name+"\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0"+s+"\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0"+responsedata[i].current_price+"\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0"+responsedata[i].ath+"\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0"+"["+athParcentage+"\u00A0\u00A0]");
+//  sec.appendChild(newdiv);
+//  newdiv.appendChild(logo);
+//  newdiv.appendChild(MarketData)
+// newdiv.appendChild(Name)
+// newdiv.appendChild(Symbol)
+// newdiv.appendChild(Price)
+// newdiv.appendChild(br)
+// newdiv.appendChild(Ath)
+//  Name.appendChild(symbdiv)
+//  symbdiv.appendChild(Symbol)
+            }
+        })
+</script>
+</body>
+</html>

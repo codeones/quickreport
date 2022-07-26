@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoinTable</title>
+</head>
+<style>
+    table {
+        border: 3px solid black;
+        border-collapse: collapse;
+      
+    }
+
+    td {
+        border: 1px solid orange;
+        border-collapse: collapse;
+        padding: 10px 25px;
+    }
+    .ATH{
+        color: red;
+    }
+</style>
+
+<body>
+    <table id="MainTable">
+        <tr><th>Logo</th><th>RANK </th><th>SYMBOL</th><th>PRICE </th><th>M CAP</th><th>ATH</th><th>From Ath</th></tr>
+    </table>
+    <script>
+        
+        var coinrank
+        var price
+        var symbol
+        var cap
+        var ath
+        var table = document.getElementById("MainTable");
+        // var TableHead = document.createElement("thead");
+        var TableBody = document.createElement("tbody")
+        // table.appendChild(TableHead)
+        table.appendChild(TableBody)
+        var row
+        var athParcentage
+        TableBody.innerHTML="<br>"
+        var URL1 = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false`
+        fetch(URL1)
+            .then(response => response.json())
+            .then(responsedata => {
+
+                for (var m = 0; m < 10; m++) {
+
+                    // logo.src = responsedata[m].image;
+                    coinrank = responsedata[`${m}`].market_cap_rank
+                    price = responsedata[m].current_price
+                    symbol = (responsedata[m].symbol).toUpperCase();
+                    cap = responsedata[m].market_cap;
+                    ath = responsedata[m].ath;
+                    TableBody.innerHTML+=row
+                    athParcentage=responsedata[m].ath_change_percentage
+                    athParcentage=parseFloat(athParcentage).toFixed(2)+"%"
+                   
+                    row = `<tr><td><img src=${responsedata[m].image} style="width:30px"></td><td>${coinrank}</td><td>${price}</td><td>${symbol}</td><td>${cap}</td><td>${ath}</td><td class="ATH">${athParcentage}</td</tr>`;
+                    
+                }
+            })
+           
+    </script>
+</body>
+
+</html>

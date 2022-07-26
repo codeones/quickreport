@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>loader</title>
+</head>
+<style>
+    body{
+        background-color: black;
+       /* / justify-content: center; */
+        display: block;
+        /* place-items: center; */
+    }
+    /* loader Css Start  */
+    .container{
+    width: 100%;
+    height: 100%;
+        justify-content: center;
+        display: flex;
+        margin-top: 300px;    
+    }
+    .loader{
+       
+        display: flex;
+    } 
+    .loader::after{
+        content: "";
+        width: 25px;
+        height: 25px;
+        border: 5px solid rgba(65, 64, 64, 0.867);
+        color: rgb(9, 9, 9);
+        border-top-color: #ffe608;
+        /* border-left-color: rgb(43, 43, 42);
+        border-right-color: rgb(38, 0, 255);
+        border-bottom-color: rgb(255, 115, 0); */
+        border-radius: 50%; 
+         animation: loader 1s linear infinite;
+    }
+    @keyframes loader {
+        to {
+            transform: rotate(2turn);
+        }
+        /*Loader Css END  */
+    }
+</style>
+<body>
+    <div class="container">
+    <div class="loader loading--full-height"></div>
+    <p style="color: wheat;" >Loading Data ....</p>
+    </div>
+</body>
+</html>
