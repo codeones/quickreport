@@ -6,7 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <title>Success</title>
+    <title id="ttl">
+        <%-transactions-%> Added
+    </title>
 </head>
 <style>
     * {
@@ -630,35 +632,6 @@
     .swal-overlay {
         background-color: rgb(195, 195, 204);
     }
-
-    .swal-modal {
-        background-color: white;
-        border: 1px solid rgb(7, 7, 7);
-    }
-
-    .swal-overlay {
-        background-color: rgba(255, 255, 255, 0.2);
-    }
-
-    .swal-title {
-        margin: 0px;
-        font-size: 50px;
-        color: green;
-        margin-bottom: 28px;
-    }
-
-    .swal-button {
-        padding: 10px;
-        border-radius: 2px;
-        /* background-color: #4962B3; */
-        font-size: 18px;
-        font-family: monospace;
-        color: black;
-        border: 5px solid rgb(116, 117, 116);
-        border-radius: 10px;
-        /* border: 1px solid #3e549a; */
-        /* text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3); */
-    }
 </style>
 
 <body>
@@ -673,8 +646,6 @@
                 class="status__dot">.</span><span class="status__dot">.</span><span class="status__dot">.</span><span
                 </div>
     </main>
-
-
     <script>
         document.getElementById('anim').style.display = 'none'
         document.getElementById('disp').style.display = 'none'
@@ -685,15 +656,14 @@
         function home() {
             document.getElementById('anim').style.display = 'block'
             document.getElementById('disp').style.display = 'block'
-            document.getElementById('disp').innerText = ''
+            document.getElementById('disp').innerText = 'Redirecting To Home'
         }
-        swal("Transcation Added! ", "", "success", {
+        swal(" <%-transactions-%>  \n ,Transactions Added Successfully From File ' <%-file-%> '  ", "For More Details Please Visit Dashboard", "success", {
             buttons: {
                 cancel: "Dash Bord",
                 catch: {
-                    text: "Add Another ",
+                    text: "Home",
                     value: "redirect",
-                    closeOnClickOutside: false,
                 },
 
             },
@@ -704,17 +674,22 @@
 
 
                     case "redirect":
+                        window.location = "/"
                         home()
-                        window.location = "/funding"
-
                         break;
 
                     default:
                         dashbord()
+                        // document.write('<main><div class="preloader"><div class="preloader__square"></div><div class="preloader__square"></div><div class="preloader__square"></div><div class="preloader__square"></div></div><div class="status">Preparing Your Dashboard<span class="status__dot">.</span><spanclass="status__dot">.</span><spanclass="status__dot">.</span><span</div></main>')
                         window.location = "/dash-bord"
+                        var title = document.getElementById("ttl").innerText = "Preparing your Dashboard"
+                        console.log(title.value)
+
                 }
 
             });
+
+
 
     </script>
 </body>

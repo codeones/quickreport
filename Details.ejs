@@ -23,7 +23,7 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
-    <title>Transaction Details</title>
+    <title>Transaction Details | <%-CmcSymbol-%>USDT</title>
     <style>
         body {
             overflow-x: hidden;
@@ -44,8 +44,8 @@
         }
 
         .swal2-popup {
-            width: 360px;
-            height: 230px;
+            width: 400px;
+            height: 270px;
             background-color: #313131;
 
         }
@@ -53,7 +53,11 @@
 
 
         .buttons {
+            margin-top: 40px;
+
             display: flex;
+            margin-left: 5px;
+            margin-right: 5px;
 
         }
 
@@ -120,12 +124,12 @@
             font-size: large;
             font-family: monospace;
             width: 100%;
-
             height: inherit;
             font-size: medium;
             border-collapse: collapse;
             border-radius: 10px;
             outline: none;
+            border: none;
         }
 
         .Fheading {
@@ -162,10 +166,10 @@
 
         }
 
-        th {
+        /* th {
             color: aquamarine;
             height: 35px;
-        }
+        } */
 
         .mainmenu {
             height: 100px;
@@ -175,11 +179,7 @@
             padding: 0;
         }
 
-        td {
 
-            font-size: small;
-            border: none;
-        }
 
         tr {
             border: 0.1px solid rgb(2, 23, 2);
@@ -221,14 +221,20 @@
         }
 
         th {
-            background-color: #1f1e1e;
-            color: #f88605;
-            font-weight: 9000;
+            background-color: #f88605;
+            color: rgb(9, 9, 9);
             border: none;
-            font-weight: bolder;
-            font-family: sans-serif;
-            font-size: small;
-            border-radius: 2px;
+            /* font-family: "Courier New", Courier, monospace; */
+            text-decoration: solid;
+
+            padding: 7px;
+            font-weight: 900;
+            font-size: large;
+            position: static;
+            top: 0px;
+
+            box-shadow: 6px 4px 3px 0px rgba(17, 16, 16, 0.322);
+            /* border-radius: 2px; */
         }
 
         a:link {
@@ -275,7 +281,8 @@
         }
 
         .detail {
-            height: 15vh;
+            height: 18vh;
+
             width: 98%;
             margin-left: 10px;
             margin-right: 10px;
@@ -290,7 +297,7 @@
         }
 
         .value {
-            height: 60%;
+            height: 65%;
             width: 30%;
             ;
             border: none;
@@ -302,14 +309,16 @@
             color: aliceblue;
             text-align: center;
             padding: 5px;
+            /* overflow-x: auto; */
             font-size: medium;
             background-color: #323030;
             box-shadow: -1px -1px 1.5px 0px #7e7e7b, 1px 1px 1.5px 0px rgba(153, 152, 152, 0.322);
         }
 
         .pnl {
-            height: 60%;
+            height: 65%;
             width: 30%;
+            /* overflow-x: auto; */
             /* border: 3px solid rgb(190, 238, 178); */
             margin-top: 10px;
             padding: 5px;
@@ -337,6 +346,9 @@
             height: 20px;
             text-align: center;
             font-size: small;
+            margin: 0;
+            border: none;
+            border-collapse: collapse;
         }
 
         .tc {
@@ -404,6 +416,10 @@
         /* footer start */
 
 
+        .fa-edit:hover {
+            cursor: pointer;
+            color: #f88605;
+        }
 
         * {
             margin: 0;
@@ -740,8 +756,10 @@
             font-size: medium;
         }
 
+
         .fa-times:hover {
             color: #f88605;
+            cursor: pointer;
         }
 
         .fa-edit {
@@ -855,7 +873,7 @@
             </span>
         </div>
         <div class="value">
-            <span style="font-size: small;">Average price: <%-parseFloat(Avp).toFixed(3)-%> $
+            <span title="Average Price" style="font-size: small;">A. price: $ <%-parseFloat(Avp).toFixed(3)-%>
             </span>
         </div>
         <div class="value">
@@ -863,13 +881,13 @@
             </span>
         </div>
         <div class="value">
-            <span style="font-size: small;">VOLUME : <%- parseFloat(volume).toFixed(3)-%>
+            <span style="font-size: small;">Volume : <%- parseFloat(volume).toFixed(3)-%>
             </span>
         </div>
         <div class="pnl">
             <span style="font-size: small;" class="">
                 Current value : <br>
-                $<%-parseFloat(holding*CurrenPrice).toFixed(2)-%>
+                $ <%-parseFloat(holding*CurrenPrice).toFixed(2)-%>
             </span>
             <p style="font-size: small;" class="pnlR">
             </p>
@@ -911,7 +929,7 @@
                 <% if( results.length> 0 ){ %>
                     <% for(var i=0 ;i < results.length;i++){ %>
             <tr>
-                <form id="deleteForm" action="/deleteTransaction" method="post">
+                <form id="deleteForm" method="post">
 
                     <td><input class="orderdata" name="price" title="Order Type  : '<%- results[i].ORDER_TYPE -%>'"
                             type="text" value="<%- results[i].ORDER_TYPE.toUpperCase () -%>" disabled /></td>
@@ -928,10 +946,11 @@
 
                     <td><input class="orderdata" name="SEll_cost" title="Selling Cost : '<%- results[i].SELL_COST -%>'"
                             type="text" value="<%- results[i].SELL_COST -%>" disabled /></td>
-                            </form>
-                    <!-- onclick="s('<%- results[i].ORDER_TYPE -%>','<%- results[i].PRICE -%>','<%- results[i].UNITS -%>','<%- results[i].TOTAL_COST -%>','<%- results[i].SELL_COST -%>')" -->
-                    <td><a onclick="deleteTransaction()" class="fas fa-times"></a> ,<a oncanplay="edit()" href=""
-                            class="far fa-edit"></a></td>
+                </form>
+                <!-- onclick="s('<%- results[i].ORDER_TYPE -%>','<%- results[i].PRICE -%>','<%- results[i].UNITS -%>','<%- results[i].TOTAL_COST -%>','<%- results[i].SELL_COST -%>')" -->
+                <td><a onclick="deleteTransaction(`<%- results[i].ID-%>`,`<%- results[i].Coin_Name-%>`)"
+                        class="fas fa-times"></a> ,<a onclick="edit()" href="/update?id=<%- results[i].ID-%>"
+                        class="far fa-edit"></a></td>
             </tr>
             <%}%>
                 <%}else{ i=1 %>
@@ -1055,31 +1074,28 @@
                 window.location = "/portfolio"
             })
         }
-        function DeleteT(sym, type, price, unit, cost, sell) {
-            console.log(sym, type, price, unit, cost, sell)
-            
 
-        }
-function deleteTransaction()
-{
-    Swal.fire({
-                title: 'Are you sure?',
-                text: " Delete Transaction",
+
+        function deleteTransaction(id, Asset) {
+            Swal.fire({
+                title: 'Sure ?',
+                // showDenyButton: true,
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#FF0000',
-                confirmButtonText: 'Delete '
+                confirmButtonText: 'Delete Transaction ',
+                // denyButtonText: `Don't save`,
+                icon: 'question'
             }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                var Did = parseInt(id)
+                console.log(Did)
                 if (result.isConfirmed) {
-                    document.getElementById("deleteForm").submit()
-                    Swal.fire(
-                        'Deleted!',
-                        ' Reset Seccessfully',
-
-                    )
+                    Swal.fire('Deleted', '', 'success')
+                    window.location = `/delete?id=${Did}&Asset='${Asset}'`
+                } else if (result.isDenied) {
+                    Swal.fire('Changes are not saved', '', 'info')
                 }
             })
-}
+        }
         // Load the Visualization API and the corechart package.
         google.charts.load('current', { 'packages': ['corechart'] });
 

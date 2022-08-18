@@ -143,6 +143,13 @@
     width: 100vw;
   }
 
+
+
+  tbody {
+    max-height: 200px;
+    overflow-y: scroll;
+  }
+
   .connection {
     color: red;
     visibility: hidden;
@@ -154,6 +161,7 @@
     color: aqua;
     margin-left: 15%;
   }
+
 
   .mainmenu {
     /* position: fixed; */
@@ -347,10 +355,10 @@
     border-collapse: collapse;
     /* border: 3px ridge rgb(8, 8, 8) ; */
     display: flexbox;
-    width: 90.9%;
+    width: 92.9%;
     background-color: #0b0a0b;
-    margin-left: 3%;
-    margin-right: 5px;
+    margin-left: 25px;
+    margin-right: 2px;
 
     box-shadow: -5px -5px 2px 0px rgba(144, 143, 143, 0.322) inset, 5px 5px 2px 0px rgba(144, 143, 143, 0.322) inset;
   }
@@ -360,8 +368,8 @@
   }
 
   th {
-    background-color: black;
-    color: orange;
+    background-color: #f88605;
+    color: rgb(9, 9, 9);
     border: none;
     /* font-family: "Courier New", Courier, monospace; */
     text-decoration: solid;
@@ -369,8 +377,24 @@
     padding: 3px;
     font-weight: 900;
     font-size: larger;
+    position: static;
+    top: 0px;
     font-family: 'Courier New', Courier, monospace;
     box-shadow: 6px 4px 3px 0px rgba(17, 16, 16, 0.322);
+  }
+
+  tbody {
+    display: block;
+    max-height: 1000px;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  thead,
+  tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
   }
 
   th:hover {
@@ -378,7 +402,8 @@
   }
 
   .NAME {
-    color: #525150;
+    color: #c4c7c7;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   }
 
   .NAME:hover {
@@ -392,14 +417,14 @@
     font-size: medium;
   }
 
-  td:hover {
+  /* td:hover {
     font-size: medium;
     font-weight: 900;
     cursor: pointer;
     color: #ffb11a;
     border: 1px solid #fc7f03;
     border-radius: 2px;
-  }
+  } */
 
   .rank {
     width: 50px !important;
@@ -699,7 +724,7 @@
 
 
   <div class="searchcenter">
-    <input type="text" onkeydown="ed()" onclick="ed()" onkeyup="ed()" placeholder="Search Coin Name" id="search"
+    <input type="search" onkeydown="ed()" onclick="ed()" onkeyup="ed()" placeholder="Search Coin Name" id="search"
       list="coinId">
     <button id="submitID" onclick="search()">Search</button>
   </div>

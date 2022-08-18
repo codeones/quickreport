@@ -13,7 +13,7 @@
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
     "nodemailer": "^6.7.3",
-    "nodemon": "^2.0.16",
+    "nodemon": "^2.0.19",
     "sweetalert": "^2.1.2",
     "xlsx-to-json": "^0.3.0"
   },
@@ -22,7 +22,8 @@
   "description": "Crypt portfolio tracker",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "keywords": [
     "node",

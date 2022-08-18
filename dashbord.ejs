@@ -267,10 +267,7 @@
 
         }
 
-        th {
-            color: aquamarine;
-            height: 35px;
-        }
+
 
         .mainmenu {
             height: 60px;
@@ -332,14 +329,19 @@
         }
 
         th {
-            background-color: #030303;
-            color: #f88605;
-            font-weight: 9000;
+            background-color: #f88605;
+            color: rgb(9, 9, 9);
             border: none;
-            font-weight: bolder;
-            font-family: 'Signika Negative', sans-serif;
-            font-size: small;
-            border-radius: 2px;
+            /* font-family: "Courier New", Courier, monospace; */
+            text-decoration: solid;
+
+            padding: 7px;
+            font-weight: 900;
+            font-size: x-large;
+            position: static;
+            top: 0px;
+
+            box-shadow: 6px 4px 3px 0px rgba(17, 16, 16, 0.322);
         }
 
 
@@ -898,9 +900,9 @@
 
     <div class="tablec">
         <table id="Ttable" style="width: 100%;">
-            <tr id="Tthead">
-                <th id="u">#</th>
-                <th id="c" style="border-radius: 10px 0px 0px 0px;font-family: 'Signika Negative', sans-serif;">COIN
+            <tr style="position:static;" id="Tthead">
+                <th id="u" style="border-radius: 10px 0px 0px 0px;">#</th>
+                <th id="c" style="border-radius: 0px 0px 0px 0px;font-family: 'Signika Negative', sans-serif;">COIN
                 </th>
                 <th id="u">UNITS</th>
                 <th id="co">COST</th>
@@ -916,7 +918,7 @@
                             <input class="orderdata" type="text" value="<%-i+1-%>" disabled />
 
                         </td>
-                        <form action="/Transactions" method="post" id="<%-i-%>">
+                        <form method="post" id="<%-i-%>">
                             <td>
                                 <input class="orderdata" name="coin__name" type="text" value="<%-
                                     results[i].Coin_Name-%>" disabled />

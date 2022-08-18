@@ -2,6 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const csvtojson = require('csvtojson');
 const fs = require('fs')
+var PORT = process.env.PORT || 7000
 const path = require('path')
 const console = require('console');
 const cnn = require("./connection");
@@ -59,6 +60,66 @@ const auth = async (req, res, next) => {
 
 
 }
+app.get('/update', (req, res) => {
+  if (found) {
+    var Id = req.query.id;
+    console.log(`You have clicked on ID :`, Id)
+    var updateQuery = `SELECT *FROM PORTFOLIO WHERE ID=${Id}`
+    cnn.query(updateQuery, (err, result) => {
+      if (err) console.log(err);
+      res.render(__dirname + '/update', { result });
+    })
+    // res.render(__dirname + '/update', { result });
+  }
+  else {
+    res.redirect('/login')
+  }
+})
+
+app.post('/update', (req, res) => {
+  if (found) {
+    var coinname = req.body.coinName;
+    // var base = req.body.base;
+    var ordertype = req.body.ordertype;
+    var id = req.body.id;
+    var price = req.body.price;
+    var sellcost;
+    if (price < 0.0001) {
+      price = parseFloat(price).toFixed(6);
+    } else {
+      price = parseFloat(price).toFixed(3);
+    }
+    var unit = req.body.units;
+    var total = req.body.totals;
+    if (total < 0.0001) {
+      total = parseFloat(total).toFixed(6);
+    } else {
+      total = parseFloat(total).toFixed(2);
+    }
+    if (ordertype == "SELL") {
+      unit = 0 - unit;
+      sellcost = total;
+      total = 0
+
+
+    } else {
+      unit = unit;
+      sellcost = 0
+    }
+    // `CREATE TABLE portfolio(ID INT AUTO_INCREMENT KEY ,Coin_Name VARCHAR(10),ORDER_TYPE VARCHAR(10), PRICE VARCHAR(50),UNITS VARCHAR(50),TOTAL_COST VARCHAR(50),SELL_COST VARCHAR(50))`;
+    var updatepost = `update portfolio set Coin_Name='${coinname}',ORDER_TYPE='${ordertype}',PRICE='${price}',UNITS='${unit}',TOTAL_COST='${total}' ,SELL_COST='${sellcost}' where ID= ${id}`
+    console.log(updatepost)
+    cnn.query(updatepost, (err, result) => {
+      if (err) console.log(err)
+      res.redirect(`/Transactions?Asset='${coinname}'`)
+    })
+    // res.render(__dirname + '/update', { result });
+  }
+  else {
+    res.redirect('/login')
+  }
+})
+app
 //register start
 app.get('/user', (req, res) => {
   function DbOperationsForRegister() {
@@ -141,6 +202,7 @@ app.post("/login", (req, res) => {
       })
     })
   }
+
   // console.log("BODY::::", req.body)
   usernameorEmail = req.body.usrName;
   passwordlog = req.body.Passlog;
@@ -197,14 +259,14 @@ app.post("/portfolio", (req, res) => {
     cnn.connect(function (err) {
       if (err) throw err;
       console.log("connected");
-      var sql = `INSERT INTO portfolio VALUES('${coinname}','${ordertype}',${price},${unit},${total},${sellcost})`;
+      var sql = `INSERT INTO portfolio (Coin_Name,ORDER_TYPE,PRICE,UNITS,TOTAL_COST,SELL_COST) VALUES('${coinname}','${ordertype}',${price},${unit},${total},${sellcost})`;
       cnn.query(sql, (err, result) => {
         if (err) throw err;
         res.sendFile(__dirname + "/response.html");
       });
     });
   } else {
-    var sql = `INSERT INTO portfolio VALUES('${coinname}','${ordertype}',${price},${unit},${total},${sellcost})`;
+    var sql = `INSERT INTO portfolio (Coin_Name,ORDER_TYPE,PRICE,UNITS,TOTAL_COST,SELL_COST ) VALUES('${coinname}','${ordertype}',${price},${unit},${total},${sellcost})`;
     cnn.query(sql, (err, results) => {
       if (err) throw err;
       res.sendFile(__dirname + "/response.html");
@@ -238,7 +300,7 @@ app.post('/funding', (req, res) => {
   cnn.query(`use ${tablename}`, (err, result) => {
     if (err) console.log("FUnding insert err:", err)
     console.log(result)
-    cnn.query(`insert into funding values('${Amount}','${Ttype}','${Tdiscription}','${Tdate}')`, (err, result) => {
+    cnn.query(`insert into funding(amount,type, discription,date) values(${Amount},'${Ttype}','${Tdiscription}','${Tdate}')`, (err, result) => {
       if (err) console.log(err)
       res.sendFile(__dirname + '/Fresponse.html')
     })
@@ -264,8 +326,8 @@ app.post('/emailvarification', (request, response) => {
   }
 })
 function DbOperationAfterVarification() {
-  var tbl = `CREATE TABLE portfolio(Coin_Name VARCHAR(10),ORDER_TYPE VARCHAR(10), PRICE VARCHAR(50),UNITS VARCHAR(50),TOTAL_COST VARCHAR(50),SELL_COST VARCHAR(50))`;
-  var tbl2 = 'create table funding(amount varchar(50),type varchar(50),discription varchar (500), date varchar(50)) '
+  var tbl = `CREATE TABLE portfolio(ID INT AUTO_INCREMENT KEY ,Coin_Name VARCHAR(10),ORDER_TYPE VARCHAR(10), PRICE VARCHAR(50),UNITS VARCHAR(50),TOTAL_COST VARCHAR(50),SELL_COST VARCHAR(50))`;
+  var tbl2 = 'create table funding(ID INT AUTO_INCREMENT KEY , amount varchar(50),type varchar(50),discription varchar (500), date varchar(50)) '
   cnn.query(`create database ${username}`, (err, result) => {
     if (err) console.log(err)
     cnn.query(`use  ${username}`, (err, result) => {
@@ -282,19 +344,38 @@ function DbOperationAfterVarification() {
 }
 
 app.get('/reset', (req, res) => {
-  cnn.query('truncate table portfolio', (err, result) => {
-    if (err) console.log(err)
-    res.redirect('/dash-bord')
+  if (found) {
+    cnn.query(`use  ${tablename}`, (err, result) => {
+      if (err) console.log(err)
+      console.log(result)
+      cnn.query('truncate table portfolio', (err, result) => {
+        if (err) console.log(err)
+        // res.send(result)
+        res.redirect('/dash-bord')
 
-  })
+      })
+    })
+  }
+  else {
+    res.redirect('/login')
+  }
+
 })
 app.get('/resetF', (req, res) => {
 
-  cnn.query('truncate table funding', (err, result) => {
-    if (err) console.log(err)
-    res.redirect('/dash-bord')
-
-  })
+  if (found) {
+    cnn.query(`use ${tablename}`, (err, result) => {
+      if (err) console.log(err)
+      cnn.query('Truncate table funding', (err, result) => {
+        if (err) console.log(err)
+        res.redirect('/dash-bord')
+      })
+    })
+    // res.redirect('/dash-bord')
+  }
+  else {
+    res.redirect('/login')
+  }
 })
 
 app.get('/v', (req, res) => {
@@ -328,42 +409,36 @@ app.get('/emailvarification', (request, response) => {
         }
       })
       otp = Math.floor(100000 + Math.random() * 900000);
+      var emailTime = new Date()
+
       let details = {
         Form: "noreplay.quickreport@gmail.com",
         to: userEmail,
         subject: "Email Varification",
         text: `Welcome To Quick Report `,
-        html: `<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@300&amp;display=swap" rel="stylesheet">
+        html: `<body style="font-family:'Source Serif 4', sans-serif;">
 
-    <title>Document</title>
-</head>
+    <b
+        style="color:rgb(7, 7, 7) ;margin-bottom: 0px;margin-top: 25px; ;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+        welcome , <p
+            style="font-family:'Source Serif 4', sans-serif; color: rgb(13, 213, 248);margin:2px;font-weight: 300;">
+            ${name}</p>
+   </b>
+    <br>
+    <div style="text-align:left;">
+        <P style="color:rgb(17, 17, 17) margin :0px; font-size: small; text-align: left; font-weight: 500; font-size: large;">
+            Registration Was Successfull please verify your
+            email address !</P>
 
-<body style="background-color: black;">
-   
-        <h2
-            style="color:white ;margin-bottom: -40px;margin-top: -15px; text-align: center;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-            welcome , <p style="color: rgb(13, 213, 248);margin-top:-5px;font-weight: 300;">${name}</p>
-        </h2>
-        </h2><br>
-        <P
-            style="color:rgb(185, 181, 181) ;font-size: small; text-align: center;font-family: Arial, Helvetica, sans-serif">
-            Registration Successfull please verify your
-            email address .</P>
-        
-        <h2 style="font-family:'Source Serif 4', sans-serif;color: #f9d004;"> Your Email Varification Code</h2>
-        <p
-            style="color:#f8c704;background-color:rgb(13, 13, 13);box-shadow: rgb(249, 159, 4) 0px 0px 5px 0px; font-size:40px;margin: 10px;border-radius:50px;">
+        <p style="font-family:'Source Serif 4',font-weight:100px sans-serif;"> Your Email Varification Code</p>
+        <p style="font-size: xx-large; color:#f88605; font-weight:bold;  ">
             ${otp}
         </p>
-        <p style="color: rgb(243, 8, 8);">If This is not done by you . Ignore it .</p>
-        <p style="text-align: left; font-weight: 900;color: rgb(171, 170, 170); font-size: large;">Regards </p>
-        <p style="text-align: left; color: #9f9d97; margin-top:-15px ;margin-left: 15px;">Team QuickReport </p>
+        <p style="text-align: left; font-weight: 900;color: rgb(6, 6, 6); font-size: large;">Regards </p>
+        <p style="text-align: left; color: #3b3b3a; margin-top:-15px ;margin-left: 15px;">Team QuickReport </p>
+        <p style="text-align:right">${emailTime}</p>
         <hr>
-        <p>Powered By OrangeDevs</p>
+        <p style="text-align: center; font-weight:900;">Powered By OrangeDevs</p>
     </div>
 </body>`
       }
@@ -416,6 +491,11 @@ app.post('/upload', (req, res) => {
   else if (FileExtenson == ".csv") {
     console.log("FIle IS CSV")
     ReadCSVFile(file)
+    function CSVResponse(transactions) {
+      res.render(__dirname + "/uploadresponse", { transactions, file })
+      console.log(file)
+    }
+
   }
 
   console.log(FileExtenson)
@@ -461,7 +541,7 @@ app.post('/upload', (req, res) => {
         conn.query(Sq, [mainArray], (err, result) => {
           if (err) console.warn(err)
           console.log(result)
-          res.send(`${result.affectedRows} Transactions Added Seccess Fully ,`)
+          res.render(__dirname + '/uploadresponse', { transactions: result.affectedRows, file })
         })
       })
 
@@ -502,33 +582,35 @@ app.post('/upload', (req, res) => {
           assetprice = parseFloat(assetprice)
           filledunits = parseFloat(object.size);
           orderside = object.side
-          buycost = parseFloat(object.dealFunds)
+          buycost = parseFloat(object.funds)
           // console.log(`price :${assetprice} ,, SYMBOL : ${Symbol} ,,ORDER TYPE : ${orderside} ,, FILLED UNITS : ${filledunits}`)
 
           // console.log(Symbol.match(/-USDT/))
           if (Symbol != "POLX-USDT" && Symbol != "ARNM-USDT" && Symbol != "WOOP-USDT" && Symbol != "USDT-USDC" && Symbol != "USDC-USDT" && Symbol != "OXT-USDT" && Symbol != "ARMN-USDT" && Symbol != "MLS-USDT" && Symbol != "AFK-USDT" && Symbol != "KCS-USDT" && Symbol != "VR-USDT" && Symbol != "ONSTON-USDT" && Symbol != "GMM-USDT" && Symbol != "XCN-USDT" && Symbol != "WAXP-USDT" && Symbol != "RSR-USDT" && Symbol != "MLS-USDT" && Symbol != "GALAX-USDT" && Symbol != "BLOK-USDT" && Symbol != "EWT-USDT" && Symbol != "CTSI-USDT" && Symbol != "CWEB-USDT" && Symbol != "KDA-USDT" && Symbol != "UTK-USDT" && Symbol != "WAX-USDT" && Symbol != "MOVR-USDT" && Symbol != "VIDT-USDT") {
-            if (Symbol.match(/-USDT/)) {
+            if (Symbol.match(/-USDT|-USDC/g)) {
               // console.log('TRUE !!!!!!!!!!!!!!!!!11')
               Symbol = String(Symbol)
               // console.log("SYMBOL BEFORE  REMOVING USDT :", RemoveUSDT)
               RemoveUSDT = Symbol.replace("-", "")
+              if (Symbol.match(/-USDC/g)) {
+                RemoveUSDT = Symbol.replace("-USDC", "USDT")
+              }
               // console.log("SYMBOL AFTER REMOVING USDT :", RemoveUSDT)
               // console.log(RemoveUSDT)
               AssetSymbol.push(RemoveUSDT)
               // BaseAsset.push('USD')
             }
             if (orderside == "sell") {
-              sellcost = parseFloat(buycost)
-              buycost = 0
-              buycost = parseFloat(buycost)
+              sellcost = parseFloat(buycost) // 
+              buycost = parseInt(0) //buy cost will be 0
               filledunits = 0 - parseFloat(filledunits)
             }
             else {
-              sellcost = 0
-              sellcost = parseFloat(sellcost)
+
+              sellcost = parseFloat(0)
               buycost = parseFloat(buycost)
               filledunits = parseFloat(filledunits)
-              console.log(buycost)
+              console.log("Buy cost from ELSE :", buycost)
             }
             // array1.push(`${Doc_coinname}`, `${Doc_orderType}`, Doc_price, Doc_units, Doc_totalCost, Doc_SellCost)
             // mainArray.push(array1)
@@ -542,19 +624,21 @@ app.post('/upload', (req, res) => {
         }
 
         setTimeout(() => {
-          var Sqcsv = `INSERT INTO portfolio (Coin_Name,ORDER_TYPE,PRICE,UNITS,TOTAL_COST,SELL_COST ) VALUES ?`
+          var Sqcsv = `INSERT INTO portfolio  (Coin_Name,ORDER_TYPE,PRICE,UNITS,TOTAL_COST,SELL_COST ) VALUES ?`
           cnn.query(Sqcsv, [CSVfinalArray], (err, result) => {
             if (err) console.log(err)
             console.log("SQL RESPONSE FROM CSV FUNCTION :", result)
           })
         }, 1000)
-        res.send(`${CSVfinalArray.length} Transaction Added Seccess Fully ,`)
+
       })
 
 
 
-
-
+    setTimeout(() => {
+      CSVResponse(CSVfinalArray.length)
+    }, 3000);
+    // res.send(`${CSVfinalArray.length} Transaction Added Seccess Fully ,`)
   }
 
   // setTimeout(() => {
@@ -613,19 +697,25 @@ const validateCoinName = (req, res, next) => {
 //--Start---Route for get detail for all transaction of a perticulor coin
 
 app.get('/resetAll', (req, res) => {
-  cnn.query(`use ${tablename}`, (err, result) => {
-    if (err) console.log(err)
-    cnn.query('truncate table funding ', (err, result) => {
-      if (err)
-        console.log(err)
-      cnn.query('truncate table portfolio ', (err, result) => {
-        if (err) console.log(err)
-        if (result > 0) {
-          response.redirect('/dash-bord')
-        }
+  if (found) {
+    cnn.query(`use ${tablename}`, (err, result) => {
+      if (err) console.log(err)
+      cnn.query('truncate table funding ', (err, result) => {
+        if (err)
+          console.log(err)
+        cnn.query('truncate table portfolio ', (err, result) => {
+          if (err) console.log(err)
+          if (result > 0) {
+            response.redirect('/dash-bord')
+          }
+        })
       })
     })
-  })
+    res.redirect('/dash-bord')
+  }
+  else {
+    res.redirect('/login')
+  }
 })
 
 const deleteWare = (req, res, next) => {
@@ -642,160 +732,168 @@ const deleteWare = (req, res, next) => {
 //   console.log(req.query.Sym)
 
 // })
-app.post('/deleteTransaction', (req, res) => {
-  req.body
-  console.log(req.body)
-  res.send("request recived !!!!!!!!!1")
-})
 
 app.get('/about', (req, res) => {
   res.sendFile(__dirname + "/about.html")
 })
 app.get('/Transactions', validateCoinName, (req, res) => {
   if (found) {
-    console.log(req.query.Asset)
-    var Asset_Name = req.query.Asset
-    var coinSymbol = Asset_Name.substring(Asset_Name.length - 5, 1)
-    var ImageSrc;
-    var CurrenPrice;
-    var ChangeIn7D;
-    var ChangeIn30D;
-    var ChangeIn60D;
-    var ChangeIn90D;
-    var SumInvested = 0
-    var SumSellCost = 0
-    var Avp;
-    var CoinId
-    var CmcName;
-    var CmcSymbol;
-    var PnlArray = [];
-    var TotalPNLD;
-    var TotalPNLP;
-    var volume = 0;
-    const CmC = async () => {
-      console.log(coinSymbol)
-      await axios(`https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?symbol=${coinSymbol}`, {
-        headers: {
-          "X-CMC_PRO_API_KEY": "8f4e31a4-7094-45aa-aa06-b9f748555a98",
-          "Accept": "application/json",
-        },
-      })
-        .then((response) => {
-          return response.data;
-        })
-        .then((FinalData) => {
+    conn.query(`select *from portfolio where Coin_Name=${req.query.Asset}`, (err, result) => {
+      if (err) console.log(err)
+      if (result.length > 0) {
 
 
-
-          // console.log(FinalData.data)
-          CmcName = FinalData.data[`${coinSymbol}`][0].name
-          CmcSymbol = FinalData.data[`${coinSymbol}`][0].symbol
-          CurrenPrice = FinalData.data[`${coinSymbol}`][0]['quote']['USD'].price
-          ChangeIn24H = FinalData.data[`${coinSymbol}`][0]['quote']['USD'].percent_change_24h
-          ChangeIn7D = FinalData.data[`${coinSymbol}`][0]['quote']['USD'].percent_change_7d
-          ChangeIn30D = FinalData.data[`${coinSymbol}`][0]['quote']['USD'].percent_change_30d
-          ChangeIn60D = FinalData.data[`${coinSymbol}`][0]['quote']['USD'].percent_change_60d
-          ChangeIn90D = FinalData.data[`${coinSymbol}`][0]['quote']['USD'].percent_change_90d
-
-          setTimeout(() => {
-            CoinId = FinalData.data[`${coinSymbol}`][0].slug;
-            if (CoinId == 'polkadot-new') {
-              CoinId = CoinId.substring(CoinId.length - 4, 0)
-            }
-            else if (CoinId == "sxp") {
-              console.log("TRUE")
-              CoinId = "swipe";
-            }
-            else if (CoinId == "bnb") {
-              CoinId = "binancecoin"
-            }
-            else if (CoinId == "terra-luna-v2") {
-              CoinId = "terra-luna"
-            }
-            else if (CoinId == "near-protocol") {
-              CoinId = "near"
-            }
-            else if (CoinId == "polygon") {
-              CoinId = "matic-network"
-            }
-            else if (CoinId == "travala") {
-              CoinId = "concierge-io"
-            }
-            else if (CoinId == "pancakeswap") {
-              CoinId = "pancakeswap-token"
-            }
-            else if (CoinId == "apecoin-ape") {
-              CoinId = "apecoin"
-            }
-            else if (CoinId == "avalanche") {
-              CoinId = "avalanche-2"
-            }
-            setTimeout(() => {
-              Coingecko(CoinId)
-            }, 100)
-          }, 100)
-          // console.log("Coin Name :", CoinId)
-
-
-
-        });
-
-    }
-    CmC()
-
-    const Coingecko = async (id) => {
-
-      await axios(`https://api.coingecko.com/api/v3/coins/${id}?localization=false&community_data=false&developer_data=false`)
-        .then((response) => {
-          return response.data;
-        })
-        .then((FinalData) => {
-
-          console.log("COIN GECKO START")
-          ImageSrc = FinalData.image.large;
-          console.log(ImageSrc)
-          cnn.query(`select *from portfolio where Coin_Name=${Asset_Name}`, (err, results) => {
-            if (err) console.log(err)
-            var holding = 0
-            console.log(results)
-            for (var u = 0; u < results.length; u++) {
-              if (results[u].UNITS < 0) {
-                var unt = results[u].UNITS * -1
-                volume = parseFloat(volume) + parseFloat(unt)
-              }
-              else {
-                volume = parseFloat(volume) + parseFloat(results[u].UNITS)
-              }
-              holding = holding + parseFloat(results[u].UNITS);
-              SumInvested = SumInvested + parseFloat(results[u].TOTAL_COST - results[u].SELL_COST)
-              SumSellCost = SumSellCost + parseFloat(results[u].SELL_COST)
-              if (results[u].ORDER_TYPE == "BUY") {
-                var Detailspnl
-                Detailspnl = parseFloat(((CurrenPrice - results[u].PRICE) / results[u].PRICE) * 100)
-                PnlArray.push(Detailspnl);
-              }
-
-
-            }
-            Avp = (SumInvested - SumSellCost) / holding
-            console.log("holding=", SumInvested + "-" + SumSellCost + "/" + holding)
-            TotalPNLD = (((holding * CurrenPrice) + SumSellCost) - SumInvested)
-            TotalPNLP = parseFloat((((holding * CurrenPrice) + SumSellCost) - SumInvested) / SumInvested) * 100
-            Avp = parseFloat(Avp).toFixed(4)
-            console.log("volume= =================", volume)
-            res.render(__dirname + "/Details", {
-              results, holding, ImageSrc, CurrenPrice, ChangeIn24H, ChangeIn30D, ChangeIn7D, ChangeIn60D, ChangeIn90D, Avp, CmcName, CmcSymbol, Detailspnl, TotalPNLD, TotalPNLP, SumInvested, Asset_Name, volume
-            })
-
-
+        console.log(req.query.Asset)
+        var Asset_Name = req.query.Asset
+        var coinSymbol = Asset_Name.substring(Asset_Name.length - 5, 1)
+        var ImageSrc;
+        var CurrenPrice;
+        var ChangeIn7D;
+        var ChangeIn30D;
+        var ChangeIn60D;
+        var ChangeIn90D;
+        var SumInvested = 0
+        var SumSellCost = 0
+        var Avp;
+        var CoinId
+        var CmcName;
+        var CmcSymbol;
+        var PnlArray = [];
+        var TotalPNLD;
+        var TotalPNLP;
+        var volume = 0;
+        var SumOfUnits = 0
+        var SumOfTotalCost = 0
+        const CmC = async () => {
+          console.log(coinSymbol)
+          await axios(`https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?symbol=${coinSymbol}`, {
+            headers: {
+              "X-CMC_PRO_API_KEY": "8f4e31a4-7094-45aa-aa06-b9f748555a98",
+              "Accept": "application/json",
+            },
           })
+            .then((response) => {
+              return response.data;
+            })
+            .then((FinalData) => {
 
-        });
-
-    }
 
 
+              // console.log(FinalData.data)
+              CmcName = FinalData.data[`${coinSymbol}`][0].name
+              CmcSymbol = FinalData.data[`${coinSymbol}`][0].symbol
+              CurrenPrice = FinalData.data[`${coinSymbol}`][0]['quote']['USD'].price
+              ChangeIn24H = FinalData.data[`${coinSymbol}`][0]['quote']['USD'].percent_change_24h
+              ChangeIn7D = FinalData.data[`${coinSymbol}`][0]['quote']['USD'].percent_change_7d
+              ChangeIn30D = FinalData.data[`${coinSymbol}`][0]['quote']['USD'].percent_change_30d
+              ChangeIn60D = FinalData.data[`${coinSymbol}`][0]['quote']['USD'].percent_change_60d
+              ChangeIn90D = FinalData.data[`${coinSymbol}`][0]['quote']['USD'].percent_change_90d
+
+              setTimeout(() => {
+                CoinId = FinalData.data[`${coinSymbol}`][0].slug;
+                if (CoinId == 'polkadot-new') {
+                  CoinId = CoinId.substring(CoinId.length - 4, 0)
+                }
+                else if (CoinId == "sxp") {
+                  console.log("TRUE")
+                  CoinId = "swipe";
+                }
+                else if (CoinId == "bnb") {
+                  CoinId = "binancecoin"
+                }
+                else if (CoinId == "terra-luna-v2") {
+                  CoinId = "terra-luna"
+                }
+                else if (CoinId == "near-protocol") {
+                  CoinId = "near"
+                }
+                else if (CoinId == "polygon") {
+                  CoinId = "matic-network"
+                }
+                else if (CoinId == "travala") {
+                  CoinId = "concierge-io"
+                }
+                else if (CoinId == "pancakeswap") {
+                  CoinId = "pancakeswap-token"
+                }
+                else if (CoinId == "apecoin-ape") {
+                  CoinId = "apecoin"
+                }
+                else if (CoinId == "avalanche") {
+                  CoinId = "avalanche-2"
+                }
+                setTimeout(() => {
+                  Coingecko(CoinId)
+                }, 100)
+              }, 100)
+              // console.log("Coin Name :", CoinId)
+
+
+
+            });
+
+        }
+        CmC()
+
+        const Coingecko = async (id) => {
+
+          await axios(`https://api.coingecko.com/api/v3/coins/${id}?localization=false&community_data=false&developer_data=false`)
+            .then((response) => {
+              return response.data;
+            })
+            .then((FinalData) => {
+
+              console.log("COIN GECKO START")
+              ImageSrc = FinalData.image.large;
+              console.log(ImageSrc)
+              cnn.query(`select *from portfolio where Coin_Name=${Asset_Name}`, (err, results) => {
+                if (err) console.log(err)
+
+                var holding = 0
+                console.log(results)
+                for (var u = 0; u < results.length; u++) {
+                  if (results[u].UNITS < 0) {
+                    var unt = results[u].UNITS * -1
+                    volume = parseFloat(volume) + parseFloat(unt)
+                  }
+                  else {
+                    volume = parseFloat(volume) + parseFloat(results[u].UNITS)
+                  }
+                  holding = holding + parseFloat(results[u].UNITS);
+                  SumInvested = SumInvested + parseFloat(results[u].TOTAL_COST - results[u].SELL_COST)
+                  SumSellCost = SumSellCost + parseFloat(results[u].SELL_COST)
+                  if (results[u].ORDER_TYPE == "BUY") {
+                    var Detailspnl,
+                      SumOfUnits = SumOfUnits + results[u].UNITS;
+                    SumOfTotalCost = SumOfTotalCost + results[u].TOTAL_COST; Detailspnl = parseFloat(((CurrenPrice - results[u].PRICE) / results[u].PRICE) * 100)
+                    PnlArray.push(Detailspnl);
+                  }
+
+
+                }
+                Avp = (SumOfUnits / SumOfTotalCost)
+                console.log("holding=", SumInvested + "-" + SumSellCost + "/" + holding)
+                TotalPNLD = (((holding * CurrenPrice) + SumSellCost) - SumInvested)
+                TotalPNLP = parseFloat((((holding * CurrenPrice) + SumSellCost) - SumInvested) / SumInvested) * 100
+                Avp = parseFloat(Avp).toFixed(4)
+                console.log("volume= =================", volume)
+                res.render(__dirname + "/Details", {
+                  results, holding, ImageSrc, CurrenPrice, ChangeIn24H, ChangeIn30D, ChangeIn7D, ChangeIn60D, ChangeIn90D, Avp, CmcName, CmcSymbol, Detailspnl, TotalPNLD, TotalPNLP, SumInvested, Asset_Name, volume
+                })
+
+              })
+
+            });
+
+        }
+
+      }
+      else {
+        res.redirect('/dash-bord')
+      }
+    })
   }
+
   else {
     res.redirect('/login')
   }
@@ -967,24 +1065,33 @@ app.get("/dash-bord", auth, (req, res) => {
   }
 });
 //Dash-Bord END------------------->
-app.get("/delete", (request, respons) => {
+app.get("/delete", (req, res) => {
   // /delete?aset=${sym}?type=${type}?price=${price}?cost=${cost}?sell=${sell}`
-  var c = request.query.aset;
-  var t = request.query.type
-  var p = request.query.price
-  var u = request.query.units
-  var se = request.query.sell;
-  var co = request.query.cost;
-  console.log("Coin Name =", c)
-  var deleteSQL = `delete from portfolio where Coin_Name='${c}' AND ORDER_TYPE='${t}' AND PRICE=${p} AND UNITS=${u} AND TOTAL_COST=${co}AND SELL_COST=${se}`
-  // console.log(deleteSQL)
+  if (found) {
+    var deleteId = req.query.id
+    var ASSET = req.query.Asset
+    console.log("Coinname From DElete ::::::::::::::::::::::", ASSET)
+    console.log(deleteId)
 
 
-
+    // res.send(`'YOU Have Clicked : ${deleteId}`)
+    var deleteQuery = `delete from portfolio where id=${deleteId}`
+    cnn.query(deleteQuery, (err, result) => {
+      if (err) console.log(err)
+      console.log("delete RESULT :=====================", result);
+      res.redirect(`/Transactions?Asset=${ASSET}`)
+    })
+  }
+  else {
+    res.redirect('/login')
+  }
   // console.log("request :", orderid)
   // console.log("post hit")
   // var del=`delete from ${tablename} where id=${orderid}`
 
 
 });
-app.listen(7000);
+app.listen(PORT, (err) => {
+  if (err) console.log(err)
+  console.log("listining on ", PORT)
+});

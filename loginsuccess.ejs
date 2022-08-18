@@ -634,16 +634,27 @@
 
 <body>
   <main>
-    <div class="preloader">
+    <div id="anim" class="preloader">
       <div class="preloader__square"></div>
       <div class="preloader__square"></div>
       <div class="preloader__square"></div>
       <div class="preloader__square"></div>
     </div>
-    <div class="status">Please wait untill we are preparing your Dashboard<span class="status__dot">.</span><span
-        class="status__dot">.</span><span class="status__dot">.</span><span </div>
+    <div id="disp" class="status">Please wait untill we are preparing your Dashboard<span
+        class="status__dot">.</span><span class="status__dot">.</span><span class="status__dot">.</span><span </div>
   </main>
   <script>
+    document.getElementById('anim').style.display = 'none'
+    document.getElementById('disp').style.display = 'none'
+    function dashbord() {
+      document.getElementById('anim').style.display = 'block'
+      document.getElementById('disp').style.display = 'block'
+    }
+    function home() {
+      document.getElementById('anim').style.display = 'block'
+      document.getElementById('disp').style.display = 'block'
+      document.getElementById('disp').innerText = 'Redirecting To Home'
+    }
     function varified() {
       swal("Welcome Back \n , <%-name-%>   ", "Login Successfull", "success", {
         buttons: {
@@ -657,14 +668,12 @@
       })
         .then((value) => {
           switch (value) {
-
-
-
             case "redirect":
               window.location = "/"
+              home();
               break;
-
             default:
+              dashbord()
               // document.write('<main><div class="preloader"><div class="preloader__square"></div><div class="preloader__square"></div><div class="preloader__square"></div><div class="preloader__square"></div></div><div class="status">Preparing Your Dashboard<span class="status__dot">.</span><spanclass="status__dot">.</span><spanclass="status__dot">.</span><span</div></main>')
               window.location = "/dash-bord"
               var title = document.getElementById("ttl").innerText = "Preparing your Dashboard"
