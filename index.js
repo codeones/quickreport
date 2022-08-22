@@ -64,7 +64,7 @@ app.get('/update', (req, res) => {
   if (found) {
     var Id = req.query.id;
     console.log(`You have clicked on ID :`, Id)
-    var updateQuery = `SELECT *FROM PORTFOLIO WHERE ID=${Id}`
+    var updateQuery = `SELECT *FROM ${tablename}_portfolio WHERE ID=${Id}`
     cnn.query(updateQuery, (err, result) => {
       if (err) console.log(err);
       res.render(__dirname + '/update', { result });
@@ -107,7 +107,7 @@ app.post('/update', (req, res) => {
       sellcost = 0
     }
     // `CREATE TABLE portfolio(ID INT AUTO_INCREMENT KEY ,Coin_Name VARCHAR(10),ORDER_TYPE VARCHAR(10), PRICE VARCHAR(50),UNITS VARCHAR(50),TOTAL_COST VARCHAR(50),SELL_COST VARCHAR(50))`;
-    var updatepost = `update portfolio set Coin_Name='${coinname}',ORDER_TYPE='${ordertype}',PRICE='${price}',UNITS='${unit}',TOTAL_COST='${total}' ,SELL_COST='${sellcost}' where ID= ${id}`
+    var updatepost = `update ${tablename}_portfolio set Coin_Name='${coinname}',ORDER_TYPE='${ordertype}',PRICE='${price}',UNITS='${unit}',TOTAL_COST='${total}' ,SELL_COST='${sellcost}' where ID= ${id}`
     console.log(updatepost)
     cnn.query(updatepost, (err, result) => {
       if (err) console.log(err)
@@ -172,35 +172,34 @@ app.post("/login", (req, res) => {
   function DbOperationsForLogin() {
     var sqllogin = `select *from newUsers WHERE username='${usernameorEmail}' AND password='${passwordlog}'`;
     // console.log(sqllogin);
-    cnn.query('use testdb', (err, result) => {
-      if (err) console.log(err)
-      cnn.query(sqllogin, (err, resultl) => {
-        if (err) throw err;
-        // console.log("Email ID : ", userEmail)
-        if (resultl.length > 0) {
-          tablename = usernameorEmail;
-          Users_name = resultl.name;
-          found = true;
-          status = resultl[0].varified;
-          userEmail = resultl[0].emailid;
-          name = resultl[0].name;
-          Dj = resultl[0].jdate;
-          const jwtGenerateTocken = async () => {
-            var tocken = jwt.sign({ username: usernameorEmail }, "everydayisdefferentdaymakeitbestdayofyourlife")
-            JsonWebTocken = tocken;
-            console.log(tocken);
-            res.cookie("JT", tocken)
-          }
-          jwtGenerateTocken()
-          // console.log(userEmail)
-          req.session.loggedin = true;
 
-          res.render(__dirname + "/loginsuccess", { name: tablename, Ustatus: status });
-        } else {
-          res.sendFile(__dirname + "/notregistered.html");
+    cnn.query(sqllogin, (err, resultl) => {
+      if (err) throw err;
+      // console.log("Email ID : ", userEmail)
+      if (resultl.length > 0) {
+        tablename = usernameorEmail;
+        Users_name = resultl.name;
+        found = true;
+        status = resultl[0].sts;
+        userEmail = resultl[0].emailid;
+        name = resultl[0].name;
+        Dj = resultl[0].jdate;
+        const jwtGenerateTocken = async () => {
+          var tocken = jwt.sign({ username: usernameorEmail }, "everydayisdefferentdaymakeitbestdayofyourlife")
+          JsonWebTocken = tocken;
+          console.log(tocken);
+          res.cookie("JT", tocken)
         }
-      })
+        jwtGenerateTocken()
+        // console.log(userEmail)
+        req.session.loggedin = true;
+
+        res.render(__dirname + "/loginsuccess", { name: tablename, Ustatus: status });
+      } else {
+        res.sendFile(__dirname + "/notregistered.html");
+      }
     })
+
   }
 
   // console.log("BODY::::", req.body)
@@ -259,14 +258,14 @@ app.post("/portfolio", (req, res) => {
     cnn.connect(function (err) {
       if (err) throw err;
       console.log("connected");
-      var sql = `INSERT INTO portfolio (Coin_Name,ORDER_TYPE,PRICE,UNITS,TOTAL_COST,SELL_COST) VALUES('${coinname}','${ordertype}',${price},${unit},${total},${sellcost})`;
+      var sql = `INSERT INTO ${tablename}_portfolio (Coin_Name,ORDER_TYPE,PRICE,UNITS,TOTAL_COST,SELL_COST) VALUES('${coinname}','${ordertype}',${price},${unit},${total},${sellcost})`;
       cnn.query(sql, (err, result) => {
         if (err) throw err;
         res.sendFile(__dirname + "/response.html");
       });
     });
   } else {
-    var sql = `INSERT INTO portfolio (Coin_Name,ORDER_TYPE,PRICE,UNITS,TOTAL_COST,SELL_COST ) VALUES('${coinname}','${ordertype}',${price},${unit},${total},${sellcost})`;
+    var sql = `INSERT INTO ${tablename}_portfolio (Coin_Name,ORDER_TYPE,PRICE,UNITS,TOTAL_COST,SELL_COST ) VALUES('${coinname}','${ordertype}',${price},${unit},${total},${sellcost})`;
     cnn.query(sql, (err, results) => {
       if (err) throw err;
       res.sendFile(__dirname + "/response.html");
@@ -297,14 +296,12 @@ app.post('/funding', (req, res) => {
     Amount = 0 - Amount;
   }
   console.log(Amount, Ttype, Tdiscription, Tdate)
-  cnn.query(`use ${tablename}`, (err, result) => {
-    if (err) console.log("FUnding insert err:", err)
-    console.log(result)
-    cnn.query(`insert into funding(amount,type, discription,date) values(${Amount},'${Ttype}','${Tdiscription}','${Tdate}')`, (err, result) => {
-      if (err) console.log(err)
-      res.sendFile(__dirname + '/Fresponse.html')
-    })
+
+  cnn.query(`insert into ${tablename}_funding(amount,type, discription,date) values(${Amount},'${Ttype}','${Tdiscription}','${Tdate}')`, (err, result) => {
+    if (err) console.log(err)
+    res.sendFile(__dirname + '/Fresponse.html')
   })
+
 })
 //Funding route End
 // OTP varification start
@@ -326,8 +323,8 @@ app.post('/emailvarification', (request, response) => {
   }
 })
 function DbOperationAfterVarification() {
-  var tbl = `CREATE TABLE portfolio(ID INT AUTO_INCREMENT KEY ,Coin_Name VARCHAR(10),ORDER_TYPE VARCHAR(10), PRICE VARCHAR(50),UNITS VARCHAR(50),TOTAL_COST VARCHAR(50),SELL_COST VARCHAR(50))`;
-  var tbl2 = 'create table funding(ID INT AUTO_INCREMENT KEY , amount varchar(50),type varchar(50),discription varchar (500), date varchar(50)) '
+  var tbl = `CREATE TABLE ${tablename}_portfolio(ID INT AUTO_INCREMENT KEY ,Coin_Name VARCHAR(10),ORDER_TYPE VARCHAR(10), PRICE VARCHAR(50),UNITS VARCHAR(50),TOTAL_COST VARCHAR(50),SELL_COST VARCHAR(50))`;
+  var tbl2 = `create table ${tablename}_funding(ID INT AUTO_INCREMENT KEY , amount varchar(50),type varchar(50),discription varchar (500), date varchar(50)) `
   cnn.query(`create database ${username}`, (err, result) => {
     if (err) console.log(err)
     cnn.query(`use  ${username}`, (err, result) => {
@@ -348,7 +345,7 @@ app.get('/reset', (req, res) => {
     cnn.query(`use  ${tablename}`, (err, result) => {
       if (err) console.log(err)
       console.log(result)
-      cnn.query('truncate table portfolio', (err, result) => {
+      cnn.query(`truncate table ${tablename}_portfolio`, (err, result) => {
         if (err) console.log(err)
         // res.send(result)
         res.redirect('/dash-bord')
@@ -364,13 +361,12 @@ app.get('/reset', (req, res) => {
 app.get('/resetF', (req, res) => {
 
   if (found) {
-    cnn.query(`use ${tablename}`, (err, result) => {
+
+    cnn.query(`Truncate table ${tablename}_funding`, (err, result) => {
       if (err) console.log(err)
-      cnn.query('Truncate table funding', (err, result) => {
-        if (err) console.log(err)
-        res.redirect('/dash-bord')
-      })
+      res.redirect('/dash-bord')
     })
+
     // res.redirect('/dash-bord')
   }
   else {
@@ -380,15 +376,17 @@ app.get('/resetF', (req, res) => {
 
 app.get('/v', (req, res) => {
   if (found) {
-    conn.query(`update newUsers SET varified=true where username='${tablename}'`, (e, result) => {
+    conn.query(`update newUsers SET sts=1 where username='${tablename}'`, (e, result) => {
       if (e) {
-        res.sendFile(__dirname + "Err404.html")
+        console.log(e)
+        res.sendFile(__dirname + "/Err404.html")
       };
       // console.log('SET 1 RESULT :: ', result)
-      if (result.affectedRows == 1) {
-        DbOperationAfterVarification();
-        res.sendFile(__dirname + "/EmailSuccess.html")
-      }
+      // if (result.affectedRows == 1) {
+      DbOperationAfterVarification();
+      res.sendFile(__dirname + "/EmailSuccess.html")
+      // }
+      console.log(result)
     })
   }
   else {
@@ -531,19 +529,17 @@ app.post('/upload', (req, res) => {
         mainArray.push(array1)
       }
     })
-    var Sq = `INSERT INTO portfolio (Coin_Name,ORDER_TYPE,PRICE,UNITS,TOTAL_COST,SELL_COST ) VALUES ?`
+    var Sq = `INSERT INTO ${tablename}_portfolio (Coin_Name,ORDER_TYPE,PRICE,UNITS,TOTAL_COST,SELL_COST ) VALUES ?`
     setTimeout(() => {
       console.log(mainArray)
 
-      cnn.query(`use ${tablename}`, (err, result) => {
-        if (err) console.log(err)
+
+      conn.query(Sq, [mainArray], (err, result) => {
+        if (err) console.warn(err)
         console.log(result)
-        conn.query(Sq, [mainArray], (err, result) => {
-          if (err) console.warn(err)
-          console.log(result)
-          res.render(__dirname + '/uploadresponse', { transactions: result.affectedRows, file })
-        })
+        res.render(__dirname + '/uploadresponse', { transactions: result.affectedRows, file })
       })
+
 
     }, 1000)
 
@@ -624,7 +620,7 @@ app.post('/upload', (req, res) => {
         }
 
         setTimeout(() => {
-          var Sqcsv = `INSERT INTO portfolio  (Coin_Name,ORDER_TYPE,PRICE,UNITS,TOTAL_COST,SELL_COST ) VALUES ?`
+          var Sqcsv = `INSERT INTO ${tablename}_portfolio  (Coin_Name,ORDER_TYPE,PRICE,UNITS,TOTAL_COST,SELL_COST ) VALUES ?`
           cnn.query(Sqcsv, [CSVfinalArray], (err, result) => {
             if (err) console.log(err)
             console.log("SQL RESPONSE FROM CSV FUNCTION :", result)
@@ -655,6 +651,7 @@ var name
 app.post("/user", (req, res) => {
   var jdate = new Date()
   var JoinningDAte = jdate.toString()
+  JoinningDAte = JoinningDAte.replace("GMT+0530 (India Standard Time)", "");
   username = req.body.userName;
   name = req.body.Name;
   emailid = req.body.emailId;
@@ -698,19 +695,18 @@ const validateCoinName = (req, res, next) => {
 
 app.get('/resetAll', (req, res) => {
   if (found) {
-    cnn.query(`use ${tablename}`, (err, result) => {
-      if (err) console.log(err)
-      cnn.query('truncate table funding ', (err, result) => {
-        if (err)
-          console.log(err)
-        cnn.query('truncate table portfolio ', (err, result) => {
-          if (err) console.log(err)
-          if (result > 0) {
-            response.redirect('/dash-bord')
-          }
-        })
+
+    cnn.query(`truncate table ${tablename}_funding `, (err, result) => {
+      if (err)
+        console.log(err)
+      cnn.query(`truncate table ${tablename}_portfolio `, (err, result) => {
+        if (err) console.log(err)
+        if (result > 0) {
+          response.redirect('/dash-bord')
+        }
       })
     })
+
     res.redirect('/dash-bord')
   }
   else {
@@ -738,7 +734,7 @@ app.get('/about', (req, res) => {
 })
 app.get('/Transactions', validateCoinName, (req, res) => {
   if (found) {
-    conn.query(`select *from portfolio where Coin_Name=${req.query.Asset}`, (err, result) => {
+    conn.query(`select *from ${tablename}_portfolio where Coin_Name=${req.query.Asset}`, (err, result) => {
       if (err) console.log(err)
       if (result.length > 0) {
 
@@ -846,7 +842,7 @@ app.get('/Transactions', validateCoinName, (req, res) => {
               console.log("COIN GECKO START")
               ImageSrc = FinalData.image.large;
               console.log(ImageSrc)
-              cnn.query(`select *from portfolio where Coin_Name=${Asset_Name}`, (err, results) => {
+              cnn.query(`select *from ${tablename}_portfolio where Coin_Name=${Asset_Name}`, (err, results) => {
                 if (err) console.log(err)
 
                 var holding = 0
@@ -921,129 +917,127 @@ app.get("/dash-bord", auth, (req, res) => {
 
     var TotalSell;
     var chartContent = [];
-    cnn.query(`use ${tablename}`, (err, result) => {
+
+    cnn.query(`select *from ${tablename}_funding`, (err, fundingResult) => {
       if (err) console.log("Err At switching database for Funding Table ==> ", err)
-      console.log(result)
-      cnn.query('select *from funding', (err, fundingResult) => {
-        if (err) console.log("Err At switching database for Funding Table ==> ", err)
-        console.log(fundingResult)
-        cnn.query('select SUM(amount) as balance from funding', (err, Fbalance) => {
-          if (err) console.log(err)
-          b = Fbalance[0].balance;
+      console.log(fundingResult)
+      cnn.query(`select SUM(amount) as balance from ${tablename}_funding`, (err, Fbalance) => {
+        if (err) console.log(err)
+        b = Fbalance[0].balance;
 
-          cnn.query(`select  Coin_Name, sum(UNITS) as TU ,sum(TOTAL_COST) as TC, sum(SELL_COST) as SC from portfolio group BY Coin_Name`, (err, results) => {
-            if (err) console.log(err);
-            var len = results.length;
+        cnn.query(`select  Coin_Name, sum(UNITS) as TU ,sum(TOTAL_COST) as TC, sum(SELL_COST) as SC from ${tablename}_portfolio group BY Coin_Name`, (err, results) => {
+          if (err) console.log(err);
+          var len = results.length;
 
-            var pnl = [];
-            //   var data = google.visualization.arrayToDataTable([
-            //     ['Task', 'Hours per Day'],
-            //     ['Work', 11],
-            //     ['Eat', 2],
-            //     ['Commute', 2],
-            //     ['Watch TV', 2],
-            //     ['Sleep', 7]
-            // ]);
-            for (var i = 0; i < len; i++) {
-              coinname.push(results[i].Coin_Name.toUpperCase());
-              TotalCost.push(results[i].TC);
-              invested = parseFloat(invested + (results[i].TC - results[i].SC));
-              invested = parseFloat(invested)
-              SellCost.push(results[i].SC);
-              TotalUnit.push(results[i].TU);
-              TotalSell = TotalSell + parseFloat(results[i].SC)
-              var CC = [];
-              CC.push(`${results[i].Coin_Name}` + ',' + results[i].TC)
-              chartContent.push(CC)
-            }
-            console.log("coins Name=", coinname)
-            console.log("Total Cost=", TotalCost)
-            console.log("Sell Cost=", SellCost)
+          var pnl = [];
+          //   var data = google.visualization.arrayToDataTable([
+          //     ['Task', 'Hours per Day'],
+          //     ['Work', 11],
+          //     ['Eat', 2],
+          //     ['Commute', 2],
+          //     ['Watch TV', 2],
+          //     ['Sleep', 7]
+          // ]);
+          for (var i = 0; i < len; i++) {
+            coinname.push(results[i].Coin_Name.toUpperCase());
+            TotalCost.push(results[i].TC);
+            invested = parseFloat(invested + (results[i].TC - results[i].SC));
+            invested = parseFloat(invested)
+            SellCost.push(results[i].SC);
+            TotalUnit.push(results[i].TU);
+            TotalSell = TotalSell + parseFloat(results[i].SC)
+            var CC = [];
+            CC.push(`${results[i].Coin_Name}` + ',' + results[i].TC)
+            chartContent.push(CC)
+          }
+          console.log("coins Name=", coinname)
+          console.log("Total Cost=", TotalCost)
+          console.log("Sell Cost=", SellCost)
 
-            var url = "https://api.binance.com/api/v3/ticker/24hr?symbol=";
-            currentprice = [];
-            price;
-            i = 0;
-            const loop = async () => {
-              for (var CoinName of coinname) {
-                await axios(url + CoinName)
-                  .then((response) => {
-                    return response.data;
-                  })
-                  .then((FinalData) => {
-                    // console.log(FinalData.symbol);
-                    price = FinalData.askPrice;
-                    console.log(price)
-                    // console.log("SYMBOL :", FinalData.symbol, "ASK Price ::", FinalData.askPrice)
+          var url = "https://api.binance.com/api/v3/ticker/24hr?symbol=";
+          currentprice = [];
+          price;
+          i = 0;
+          const loop = async () => {
+            for (var CoinName of coinname) {
+              await axios(url + CoinName)
+                .then((response) => {
+                  return response.data;
+                })
+                .then((FinalData) => {
+                  // console.log(FinalData.symbol);
+                  price = FinalData.askPrice;
+                  console.log(price)
+                  // console.log("SYMBOL :", FinalData.symbol, "ASK Price ::", FinalData.askPrice)
 
 
-                    setTimeout(() => {
-                      if (TotalUnit[i] > 0) {
-                        console.log("If condition is true ");
-                        // Current_Value = parseFloat(Current_Value + TotalUnit[i] * price + SellCost[i]).toFixed(3);
-                        dpnlvalue = ((TotalUnit[i] * price) + SellCost[i]) - TotalCost[i]
-                        dpnlvalue = parseFloat(dpnlvalue)
-                        console.log("current value before push :", Current_Value)
-                        Current_Value += dpnlvalue
-                        console.log("current value AFTER push :", Current_Value)
-                        console.log("PNL IN $  = $", dpnlvalue)
-                        Dpnl.push(dpnlvalue)
-                        ppnlvalue = ((((TotalUnit[i] * price) + SellCost[i]) - TotalCost[i]) / TotalCost[i]) * 100;
-                        console.log("PNL IN %  = ", ppnlvalue + "%")
-                        ppnlvalue = parseFloat(ppnlvalue).toFixed(2)
-                        Ppnl.push(ppnlvalue)
-                      }
-                      else {
-                        console.log("else condition is true ");
-                        dpnlvalue = SellCost[i] - TotalCost[i];
-                        // Current_Value = parseFloat(Current_Value + SellCost[i]).toFixed(3);
-                        dpnlvalue = parseFloat(dpnlvalue)
-                        Current_Value += dpnlvalue
-                        console.log("PNL IN $  = $", dpnlvalue)
-                        Dpnl.push(dpnlvalue);
-                        ppnlvalue = ((SellCost[i] - TotalCost[i]) / TotalCost[i]) * 100;
-                        ppnlvalue = parseFloat(ppnlvalue).toFixed(2)
-                        console.log("PNL IN %  = ", ppnlvalue + "%")
-                        Ppnl.push(ppnlvalue);
-                      }
-                      i++;
-                    }, 100)
-                    console.log(Dpnl)
-                    console.log(Ppnl)
-                    console.log("Chart Content ====", chartContent)
+                  setTimeout(() => {
+                    if (TotalUnit[i] > 0) {
+                      console.log("If condition is true ");
+                      // Current_Value = parseFloat(Current_Value + TotalUnit[i] * price + SellCost[i]).toFixed(3);
+                      dpnlvalue = ((TotalUnit[i] * price) + SellCost[i]) - TotalCost[i]
+                      dpnlvalue = parseFloat(dpnlvalue)
+                      console.log("current value before push :", Current_Value)
+                      Current_Value += dpnlvalue
+                      console.log("current value AFTER push :", Current_Value)
+                      console.log("PNL IN $  = $", dpnlvalue)
+                      Dpnl.push(dpnlvalue)
+                      ppnlvalue = ((((TotalUnit[i] * price) + SellCost[i]) - TotalCost[i]) / TotalCost[i]) * 100;
+                      console.log("PNL IN %  = ", ppnlvalue + "%")
+                      ppnlvalue = parseFloat(ppnlvalue).toFixed(2)
+                      Ppnl.push(ppnlvalue)
+                    }
+                    else {
+                      console.log("else condition is true ");
+                      dpnlvalue = SellCost[i] - TotalCost[i];
+                      // Current_Value = parseFloat(Current_Value + SellCost[i]).toFixed(3);
+                      dpnlvalue = parseFloat(dpnlvalue)
+                      Current_Value += dpnlvalue
+                      console.log("PNL IN $  = $", dpnlvalue)
+                      Dpnl.push(dpnlvalue);
+                      ppnlvalue = ((SellCost[i] - TotalCost[i]) / TotalCost[i]) * 100;
+                      ppnlvalue = parseFloat(ppnlvalue).toFixed(2)
+                      console.log("PNL IN %  = ", ppnlvalue + "%")
+                      Ppnl.push(ppnlvalue);
+                    }
+                    i++;
+                  }, 100)
+                  console.log(Dpnl)
+                  console.log(Ppnl)
+                  console.log("Chart Content ====", chartContent)
 
-                    // console.log(i);
-                  });
-              }
-
-
-              setTimeout(() => {
-                var pnl = (parseFloat(((Current_Value) / invested) * 100).toFixed(2))
-                res.render(__dirname + "/dashbord", {
-                  results,
-                  Coins: allAsset,
-                  invested,  //pvalue means portfolio value 
-                  Dpnl, Ppnl, Fbalance, fundingResult, Current_Value, chartContent, coinname, cv, TotalSell
+                  // console.log(i);
                 });
-              }, 100)
             }
 
-            // console.log("PNL :::::::::::::::::::::::::", PNL / coinname.length)
 
-            loop();
-            // console.log("gain ARRAY :", gain)
-            // pnl  close
+            setTimeout(() => {
+              var pnl = (parseFloat(((Current_Value) / invested) * 100).toFixed(2))
+              res.render(__dirname + "/dashbord", {
+                results,
+                Coins: allAsset,
+                invested,  //pvalue means portfolio value 
+                Dpnl, Ppnl, Fbalance, fundingResult, Current_Value, chartContent, coinname, cv, TotalSell
+              });
+            }, 100)
+          }
 
-            var allAsset = [... new Set(coinname)];
-            // cnn.query(total, tablename, (err, sum) => {
-            invested = parseFloat(invested).toFixed(3)
-            // console.log(results);
-            // })
+          // console.log("PNL :::::::::::::::::::::::::", PNL / coinname.length)
 
-          });
-        })
-      });
-    })
+          loop();
+          // console.log("gain ARRAY :", gain)
+          // pnl  close
+
+          var allAsset = [... new Set(coinname)];
+          // cnn.query(total, tablename, (err, sum) => {
+          invested = parseFloat(invested).toFixed(3)
+          // console.log(results);
+          // })
+
+        });
+      })
+    });
+
   }//function for database operation for dashBord route  ----END-----
   if (found) { //found will be true if username &  passwords are match in record 
     if (req.session.loggedin) {
@@ -1075,7 +1069,7 @@ app.get("/delete", (req, res) => {
 
 
     // res.send(`'YOU Have Clicked : ${deleteId}`)
-    var deleteQuery = `delete from portfolio where id=${deleteId}`
+    var deleteQuery = `delete from ${tablename}_portfolio where id=${deleteId}`
     cnn.query(deleteQuery, (err, result) => {
       if (err) console.log(err)
       console.log("delete RESULT :=====================", result);
