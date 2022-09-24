@@ -1,5 +1,6 @@
 const express = require("express");
 const axios = require("axios");
+const upload = require('express-fileupload')
 const csvtojson = require('csvtojson');
 const fs = require('fs')
 var PORT = process.env.PORT || 7000
@@ -10,6 +11,7 @@ var nodemailer = require('nodemailer');
 const bodyparser = require("body-parser");
 const app = express();
 app.use(express.json())
+app.use(upload())
 const jwt = require('jsonwebtoken')
 const session = require("express-session");
 const { request, response } = require("express");
@@ -479,168 +481,206 @@ app.get('/upload', (req, res) => {
   }
 })
 app.post('/upload', (req, res) => {
-  var file = req.body.Tfile
-  var FileExtenson = path.extname(file);
+  if (req.files) {
+    var file = req.files.Tfile
+    var fileName = file.name
+    console.log(file.mimetype)
 
-  if (FileExtenson == ".json") {
-    ReadJSONFile(file, res);
-    console.log("FIle IS JSON")
-  }
-  else if (FileExtenson == ".csv") {
-    console.log("FIle IS CSV")
-    ReadCSVFile(file)
-    function CSVResponse(transactions) {
-      res.render(__dirname + "/uploadresponse", { transactions, file })
-      console.log(file)
-    }
-
-  }
-
-  console.log(FileExtenson)
-  function ReadJSONFile(filename, res) {
-
-    var DataArray = []
-    var mainArray = []
-    var Doc_coinname, Doc_orderType, Doc_price, Doc_totalCost, Doc_SellCost, Doc_units;
-
-
-    fs.readFile(filename, "utf-8", (err, filedata) => {
-      if (err) console.log(err)
-      DataArray = JSON.parse(filedata)
-      console.log("File Type=", typeof filedata)
-      for (var i = 0; i < DataArray.length; i++) {
-        Doc_coinname = DataArray[i].Market
-        Doc_orderType = DataArray[i].Type
-        Doc_price = parseFloat(DataArray[i].Price).toFixed(5)
-        Doc_units = parseFloat(DataArray[i].Amount).toFixed(5)
-        if (Doc_orderType == "SELL") {
-          Doc_SellCost = parseFloat(DataArray[i].Total).toFixed(5)
-          Doc_totalCost = 0
-          Doc_units = 0 - Doc_units;
-        }
-        else {
-          Doc_SellCost = 0
-          Doc_totalCost = parseFloat(DataArray[i].Total).toFixed(5)
-          Doc_units = parseFloat(Doc_units).toFixed(5);
-        }
-        Doc_price
-        var array1 = [];
-        array1.push(`${Doc_coinname}`, `${Doc_orderType}`, Doc_price, Doc_units, Doc_totalCost, Doc_SellCost)
-        mainArray.push(array1)
+    console.log(fileName)
+    var fileNewName = Math.floor(Math.random() * 1000) + fileName
+    file.mv('./upload/' + fileNewName, (err) => {
+      if (err) {
+        console.log(err)
       }
-    })
-    var Sq = `INSERT INTO ${tablename}_portfolio (Coin_Name,ORDER_TYPE,PRICE,UNITS,TOTAL_COST,SELL_COST ) VALUES ?`
-    setTimeout(() => {
-      console.log(mainArray)
+      else {
+        // res.send(`file has ben seve by NAME :${fileNewName}`);
+
+        var FileExtenson = path.extname(fileNewName);
+
+        if (FileExtenson == ".json") {
+          ReadJSONFile(fileName, res);
+          console.log("FIle IS JSON")
+        }
+        else if (FileExtenson == ".csv") {
+          console.log("FIle IS CSV")
+          ReadCSVFile(file)
+          function CSVResponse(transactions) {
+            res.render(__dirname + "/uploadresponse", { transactions, file })
+            console.log(file)
+          }
+
+        }
 
 
-      conn.query(Sq, [mainArray], (err, result) => {
-        if (err) console.warn(err)
-        console.log(result)
-        res.render(__dirname + '/uploadresponse', { transactions: result.affectedRows, file })
-      })
-
-
-    }, 1000)
-
-  }
-  function ReadCSVFile(filename, res, req) {
-
-    // id: '623f5b2b87b4cb0001ed96b0',
-    //     clientOid: '',
-    //     symbol: 'ZIL-USDT',
-    //     side: 'sell',
-    //     type: 'limit',
-    //     stopPrice: '0',
-    //     price: '0.0641',
-    //     size: '72',
-    //     dealSize: '72',
-    //     dealFunds: '4.6152',
-    //     averagePrice: '0.0641',
-    //     fee: '0.0046152',
-    //     feeCurrency: 'USDT',
-    //     remark: '',
-    //     tags: '',
-    //     orderStatus: 'done',
-    //     field18: ''
-    const csvfilepath = filename
-    var AssetSymbol = []
-    var RemoveUSDT, assetprice, filledunits, buycost;
-    var sellcost = 0, orderside;
-    var CSVfinalArray = []
-    csvtojson()
-      .fromFile(csvfilepath)
-      .then((JsonDATA) => {
-        // console.log(JsonDATA)
-        for (var object of JsonDATA) {
-          Symbol = object.symbol;
-          assetprice = parseFloat(object.price)
-          assetprice = parseFloat(assetprice)
-          filledunits = parseFloat(object.size);
-          orderside = object.side
-          buycost = parseFloat(object.funds)
-          // console.log(`price :${assetprice} ,, SYMBOL : ${Symbol} ,,ORDER TYPE : ${orderside} ,, FILLED UNITS : ${filledunits}`)
-
-          // console.log(Symbol.match(/-USDT/))
-          if (Symbol != "POLX-USDT" && Symbol != "ARNM-USDT" && Symbol != "WOOP-USDT" && Symbol != "USDT-USDC" && Symbol != "USDC-USDT" && Symbol != "OXT-USDT" && Symbol != "ARMN-USDT" && Symbol != "MLS-USDT" && Symbol != "AFK-USDT" && Symbol != "KCS-USDT" && Symbol != "VR-USDT" && Symbol != "ONSTON-USDT" && Symbol != "GMM-USDT" && Symbol != "XCN-USDT" && Symbol != "WAXP-USDT" && Symbol != "RSR-USDT" && Symbol != "MLS-USDT" && Symbol != "GALAX-USDT" && Symbol != "BLOK-USDT" && Symbol != "EWT-USDT" && Symbol != "CTSI-USDT" && Symbol != "CWEB-USDT" && Symbol != "KDA-USDT" && Symbol != "UTK-USDT" && Symbol != "WAX-USDT" && Symbol != "MOVR-USDT" && Symbol != "VIDT-USDT") {
-            if (Symbol.match(/-USDT|-USDC/g)) {
-              // console.log('TRUE !!!!!!!!!!!!!!!!!11')
-              Symbol = String(Symbol)
-              // console.log("SYMBOL BEFORE  REMOVING USDT :", RemoveUSDT)
-              RemoveUSDT = Symbol.replace("-", "")
-              if (Symbol.match(/-USDC/g)) {
-                RemoveUSDT = Symbol.replace("-USDC", "USDT")
-              }
-              // console.log("SYMBOL AFTER REMOVING USDT :", RemoveUSDT)
-              // console.log(RemoveUSDT)
-              AssetSymbol.push(RemoveUSDT)
-              // BaseAsset.push('USD')
-            }
-            if (orderside == "sell") {
-              sellcost = parseFloat(buycost) // 
-              buycost = parseInt(0) //buy cost will be 0
-              filledunits = 0 - parseFloat(filledunits)
-            }
-            else {
-
-              sellcost = parseFloat(0)
-              buycost = parseFloat(buycost)
-              filledunits = parseFloat(filledunits)
-              console.log("Buy cost from ELSE :", buycost)
-            }
-            // array1.push(`${Doc_coinname}`, `${Doc_orderType}`, Doc_price, Doc_units, Doc_totalCost, Doc_SellCost)
-            // mainArray.push(array1)
-            var CSVlocalArray = [];
-            CSVlocalArray.push(`${RemoveUSDT}`, `${orderside}`, assetprice, filledunits, buycost, sellcost)
-            console.log(CSVlocalArray)
-            CSVfinalArray.push(CSVlocalArray)
-
-            console.log(CSVfinalArray)
+        var file = req.body.Tfile
+        var FileExtenson = path.extname(fileNewName);
+        if (FileExtenson == ".json") {
+          ReadJSONFile(fileName, res);
+          console.log("FIle IS JSON")
+        }
+        else if (FileExtenson == ".csv") {
+          console.log("FIle IS CSV")
+          ReadCSVFile(file);
+          function CSVResponse(transactions) {
+            res.render(__dirname + "/uploadresponse", { transactions, file: fileName })
+            console.log(fileName)
           }
         }
-
-        setTimeout(() => {
-          var Sqcsv = `INSERT INTO ${tablename}_portfolio  (Coin_Name,ORDER_TYPE,PRICE,UNITS,TOTAL_COST,SELL_COST ) VALUES ?`
-          cnn.query(Sqcsv, [CSVfinalArray], (err, result) => {
+        console.log(FileExtenson)
+        function ReadJSONFile(fileName, res) {
+          var DataArray = []
+          var mainArray = []
+          var Doc_coinname, Doc_orderType, Doc_price, Doc_totalCost, Doc_SellCost, Doc_units, TradeCost;
+          fs.readFile(`./upload/${fileNewName}`, "utf-8", (err, filedata) => {
             if (err) console.log(err)
-            console.log("SQL RESPONSE FROM CSV FUNCTION :", result)
+            DataArray = JSON.parse(filedata)
+            // console.log("File Type=", typeof filedata)
+            var fileForDelete = `./upload/${fileNewName}`
+            for (var i = 0; i < DataArray.length; i++) {
+              Doc_coinname = DataArray[i].Market // To extract the coin pair like BTCUSDT
+              Doc_orderType = DataArray[i].Type  // Order type exp. BUY/SELL
+              Doc_price = parseFloat(DataArray[i].Price).toFixed(5)  // price which may be sell price or buy price 
+              Doc_units = parseFloat(DataArray[i].Amount).toFixed(5)
+              TradeCost = parseFloat(DataArray[i].Total).toFixed(5)  // fund which used in trade OR Total cost 
+              if (Doc_orderType === "SELL") {
+                Doc_SellCost = TradeCost;
+                console.log("Doc_SellCost :==", Doc_SellCost);
+                Doc_totalCost = 0
+                Doc_units = 0 - Doc_units;
+              }
+              else {
+                Doc_SellCost = 0
+                Doc_totalCost = TradeCost;
+                Doc_units = parseFloat(Doc_units).toFixed(5);
+              }
+              Doc_price
+              var array1 = [];
+              array1.push(`${Doc_coinname}`, `${Doc_orderType}`, Doc_price, Doc_units, Doc_totalCost, Doc_SellCost)
+              mainArray.push(array1)
+            }
           })
-        }, 1000)
+          var Sq = `INSERT INTO ${tablename}_portfolio (Coin_Name,ORDER_TYPE,PRICE,UNITS,TOTAL_COST,SELL_COST ) VALUES ?`
+          setTimeout(() => {
+            console.log(mainArray)
 
-      })
+
+            conn.query(Sq, [mainArray], (err, result) => {
+              if (err) console.warn(err)
+              console.log(result)
+              console.log("File Name==", fileName)
+              res.render(__dirname + '/uploadresponse', { transactions: result.affectedRows, file: fileName })
+              try {
+                fs.unlinkSync(fileForDelete);
+                console.log("File removed:", fileForDelete);
+              } catch (err) {
+                console.error(err);
+              }
+            })
+            // cnn.connect();
+
+          }, 1000)
+
+        }
+        function ReadCSVFile(filename, res, req) {
+
+          // id: '623f5b2b87b4cb0001ed96b0',
+          //     clientOid: '',
+          //     symbol: 'ZIL-USDT',
+          //     side: 'sell',
+          //     type: 'limit',
+          //     stopPrice: '0',
+          //     price: '0.0641',
+          //     size: '72',
+          //     dealSize: '72',
+          //     dealFunds: '4.6152',
+          //     averagePrice: '0.0641',
+          //     fee: '0.0046152',
+          //     feeCurrency: 'USDT',
+          //     remark: '',
+          //     tags: '',
+          //     orderStatus: 'done',
+          //     field18: ''
+          const csvfilepath = `./upload/${fileNewName}`
+          var AssetSymbol = []
+          var RemoveUSDT, assetprice, filledunits, buycost;
+          var sellcost = 0, orderside;
+          var CSVfinalArray = []
+          csvtojson()
+            .fromFile(csvfilepath)
+            .then((JsonDATA) => {
+              // console.log(JsonDATA)
+              for (var object of JsonDATA) {
+                Symbol = object.symbol;
+                assetprice = parseFloat(object.price)
+                assetprice = parseFloat(assetprice)
+                filledunits = parseFloat(object.size);
+                orderside = object.side
+                buycost = parseFloat(object.dealFunds)
+                // console.log(`price :${assetprice} ,, SYMBOL : ${Symbol} ,,ORDER TYPE : ${orderside} ,, FILLED UNITS : ${filledunits}`)
+
+                // console.log(Symbol.match(/-USDT/))
+                if (Symbol != "POLX-USDT" && Symbol != "ARNM-USDT" && Symbol != "WOOP-USDT" && Symbol != "USDT-USDC" && Symbol != "USDC-USDT" && Symbol != "OXT-USDT" && Symbol != "ARMN-USDT" && Symbol != "MLS-USDT" && Symbol != "AFK-USDT" && Symbol != "KCS-USDT" && Symbol != "VR-USDT" && Symbol != "ONSTON-USDT" && Symbol != "GMM-USDT" && Symbol != "XCN-USDT" && Symbol != "WAXP-USDT" && Symbol != "RSR-USDT" && Symbol != "MLS-USDT" && Symbol != "GALAX-USDT" && Symbol != "BLOK-USDT" && Symbol != "EWT-USDT" && Symbol != "CTSI-USDT" && Symbol != "CWEB-USDT" && Symbol != "KDA-USDT" && Symbol != "UTK-USDT" && Symbol != "WAX-USDT" && Symbol != "MOVR-USDT" && Symbol != "VIDT-USDT") {
+                  if (Symbol.match(/-USDT|-USDC/g)) {
+                    // console.log('TRUE !!!!!!!!!!!!!!!!!11')
+                    Symbol = String(Symbol)
+                    // console.log("SYMBOL BEFORE  REMOVING USDT :", RemoveUSDT)
+                    RemoveUSDT = Symbol.replace("-", "")
+                    if (Symbol.match(/-USDC/g)) {
+                      RemoveUSDT = Symbol.replace("-USDC", "USDT")
+                    }
+                    // console.log("SYMBOL AFTER REMOVING USDT :", RemoveUSDT)
+                    // console.log(RemoveUSDT)
+                    AssetSymbol.push(RemoveUSDT)
+                    // BaseAsset.push('USD')
+                  }
+                  if (orderside == "sell") {
+                    sellcost = parseFloat(buycost) // 
+                    buycost = parseInt(0) //buy cost will be 0
+                    filledunits = 0 - parseFloat(filledunits)
+                  }
+                  else {
+
+                    sellcost = parseFloat(0)
+                    buycost = parseFloat(buycost)
+                    filledunits = parseFloat(filledunits)
+                    // console.log("Buy cost from ELSE :", buycost)
+                  }
+                  // array1.push(`${Doc_coinname}`, `${Doc_orderType}`, Doc_price, Doc_units, Doc_totalCost, Doc_SellCost)
+                  // mainArray.push(array1)
+                  var CSVlocalArray = [];
+                  CSVlocalArray.push(`${RemoveUSDT}`, `${orderside}`, assetprice, filledunits, buycost, sellcost)
+                  console.log(CSVlocalArray)
+                  CSVfinalArray.push(CSVlocalArray)
+
+                  // console.log(CSVfinalArray)
+                }
+              }
+
+              setTimeout(() => {
+                var Sqcsv = `INSERT INTO ${tablename}_portfolio  (Coin_Name,ORDER_TYPE,PRICE,UNITS,TOTAL_COST,SELL_COST ) VALUES ?`
+                cnn.query(Sqcsv, [CSVfinalArray], (err, result) => {
+                  if (err) console.log(err)
+                  console.log("SQL RESPONSE FROM CSV FUNCTION :", result)
+                })
+                CSVResponse(CSVfinalArray.length);
+              }, 1000)
+
+            })
 
 
 
-    setTimeout(() => {
-      CSVResponse(CSVfinalArray.length)
-    }, 3000);
-    // res.send(`${CSVfinalArray.length} Transaction Added Seccess Fully ,`)
+          // setTimeout(() => {
+          //   CSVResponse(CSVfinalArray.length);
+          // }, 1500);
+          // res.send(`${CSVfinalArray.length} Transaction Added Seccess Fully ,`)
+        }
+
+        // setTimeout(() => {
+        //   res.redirect('/dash-bord')
+        // }, 10000)
+      }
+    })
   }
-
-  // setTimeout(() => {
-  //   res.redirect('/dash-bord')
-  // }, 10000)
-
 })
 //upload end
 //----End---
@@ -675,7 +715,7 @@ app.post("/user", (req, res) => {
     cnn.query(sqlqr, (err, result) => {
       // console.log(result);
       if (err) throw err;
-      console.log("after create table" + result)
+      // console.log("after create table" + result)
       res.render(__dirname + "/Rresponse", { name })
     })
   }
@@ -739,7 +779,7 @@ app.get('/Transactions', validateCoinName, (req, res) => {
       if (result.length > 0) {
 
 
-        console.log(req.query.Asset)
+        // console.log(req.query.Asset)
         var Asset_Name = req.query.Asset
         var coinSymbol = Asset_Name.substring(Asset_Name.length - 5, 1)
         var ImageSrc;
@@ -748,20 +788,17 @@ app.get('/Transactions', validateCoinName, (req, res) => {
         var ChangeIn30D;
         var ChangeIn60D;
         var ChangeIn90D;
-        var SumInvested = 0
-        var SumSellCost = 0
-        var Avp;
+        let Avp;
+        let CMCDATA;
         var CoinId
         var CmcName;
         var CmcSymbol;
         var PnlArray = [];
-        var TotalPNLD;
         var TotalPNLP;
         var volume = 0;
-        var SumOfUnits = 0
-        var SumOfTotalCost = 0
+
         const CmC = async () => {
-          console.log(coinSymbol)
+          // console.log(coinSymbol)
           await axios(`https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?symbol=${coinSymbol}`, {
             headers: {
               "X-CMC_PRO_API_KEY": "8f4e31a4-7094-45aa-aa06-b9f748555a98",
@@ -775,7 +812,8 @@ app.get('/Transactions', validateCoinName, (req, res) => {
 
 
 
-              // console.log(FinalData.data)
+              console.log(FinalData.data)
+              CMCDATA = FinalData.data
               CmcName = FinalData.data[`${coinSymbol}`][0].name
               CmcSymbol = FinalData.data[`${coinSymbol}`][0].symbol
               CurrenPrice = FinalData.data[`${coinSymbol}`][0]['quote']['USD'].price
@@ -839,44 +877,50 @@ app.get('/Transactions', validateCoinName, (req, res) => {
             })
             .then((FinalData) => {
 
-              console.log("COIN GECKO START")
+              // console.log("COIN GECKO START")
               ImageSrc = FinalData.image.large;
-              console.log(ImageSrc)
-              cnn.query(`select *from ${tablename}_portfolio where Coin_Name=${Asset_Name}`, (err, results) => {
+              // console.log(ImageSrc)
+              let AvpQuery = `select SUM(UNITS) AS UnitTotal,Sum(TOTAL_COST) AS CostTotal from ${tablename}_portfolio where Coin_Name=${Asset_Name} `
+              cnn.query(AvpQuery, (err, Avpresult) => {
                 if (err) console.log(err)
+                console.log(Avpresult)
+                Avp = parseFloat(Avpresult[0].CostTotal / Avpresult[0].UnitTotal)
+                cnn.query(`select *from ${tablename}_portfolio where Coin_Name=${Asset_Name}`, (err, results) => {
+                  if (err) console.log(err)
 
-                var holding = 0
-                console.log(results)
-                for (var u = 0; u < results.length; u++) {
-                  if (results[u].UNITS < 0) {
-                    var unt = results[u].UNITS * -1
-                    volume = parseFloat(volume) + parseFloat(unt)
-                  }
-                  else {
-                    volume = parseFloat(volume) + parseFloat(results[u].UNITS)
-                  }
-                  holding = holding + parseFloat(results[u].UNITS);
-                  SumInvested = SumInvested + parseFloat(results[u].TOTAL_COST - results[u].SELL_COST)
-                  SumSellCost = SumSellCost + parseFloat(results[u].SELL_COST)
-                  if (results[u].ORDER_TYPE == "BUY") {
-                    var Detailspnl,
-                      SumOfUnits = SumOfUnits + results[u].UNITS;
-                    SumOfTotalCost = SumOfTotalCost + results[u].TOTAL_COST; Detailspnl = parseFloat(((CurrenPrice - results[u].PRICE) / results[u].PRICE) * 100)
-                    PnlArray.push(Detailspnl);
+                  var holding = 0
+                  console.log(results)
+                  for (var u = 0; u < results.length; u++) {
+                    if (results[u].UNITS < 0) {   // Start To calculte the volume (BUY +Sell) of the asset 
+                      var unt = results[u].UNITS * -1
+                      volume = parseFloat(volume) + parseFloat(unt)
+                    }
+                    else {
+                      volume = parseFloat(volume) + parseFloat(results[u].UNITS)
+                    } //END
+                    holding = holding + parseFloat(results[u].UNITS);
+
+                    if (results[u].ORDER_TYPE == "BUY" || results[u].ORDER_TYPE == "buy") {
+                      var Detailspnl;
+                      Detailspnl = parseFloat(((CurrenPrice - results[u].PRICE) / results[u].PRICE) * 100)
+                      PnlArray.push(Detailspnl);
+                    }
+
+
                   }
 
 
-                }
-                Avp = (SumOfUnits / SumOfTotalCost)
-                console.log("holding=", SumInvested + "-" + SumSellCost + "/" + holding)
-                TotalPNLD = (((holding * CurrenPrice) + SumSellCost) - SumInvested)
-                TotalPNLP = parseFloat((((holding * CurrenPrice) + SumSellCost) - SumInvested) / SumInvested) * 100
-                Avp = parseFloat(Avp).toFixed(4)
-                console.log("volume= =================", volume)
-                res.render(__dirname + "/Details", {
-                  results, holding, ImageSrc, CurrenPrice, ChangeIn24H, ChangeIn30D, ChangeIn7D, ChangeIn60D, ChangeIn90D, Avp, CmcName, CmcSymbol, Detailspnl, TotalPNLD, TotalPNLP, SumInvested, Asset_Name, volume
+                  TotalPNLP = ((CurrenPrice - Avp) / Avp) * 100
+
+                  TotalPNLD = parseFloat((100 + TotalPNLP * Avp) / 100)
+
+                  console.log("AVERage price ::", Avp)
+                  // console.log("volume= =================", volume)
+                  res.render(__dirname + "/Details", {
+                    results, holding, ImageSrc, CurrenPrice, FinalData, CMCDATA, ChangeIn24H, ChangeIn30D, ChangeIn7D, ChangeIn60D, ChangeIn90D, Avp, CmcName, CmcSymbol, TotalPNLP, SumInvested: Avpresult[0].CostTotal, Asset_Name, volume
+                  })
+
                 })
-
               })
 
             });
