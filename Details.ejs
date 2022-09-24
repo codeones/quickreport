@@ -4,10 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" type="image/x-icon" href="https://i.ibb.co/xMYYFwC/flogo.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/6e5493fd32.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500&family=Roboto+Mono&family=Rowdies:wght@700&family=Source+Serif+4:opsz,wght@8..60,300&family=Supermercado+One&display=swap"
+        rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,7 +35,7 @@
             overflow-x: hidden;
             width: 100%;
             background-color: rgb(4, 4, 4);
-            font-family: 'Roboto Mono', monospace;
+            font-family: Rajdhani;
         }
 
         .chart_div {
@@ -95,81 +101,53 @@
         }
 
 
-        .buysell:hover {
-            cursor: pointer;
-            font-weight: bold;
-            box-shadow: none;
-        }
-
+        .buysell:hover,
         .fundingB:hover {
             cursor: pointer;
             font-weight: bold;
             box-shadow: none;
         }
 
-        .h1a {
-            color: white;
-            margin-bottom: 0px;
-        }
 
-        .tablec {
-            margin-top: -50px;
-            width: 100%;
-            padding-left: 10px;
-            padding-right: 10px;
-        }
+
 
         #Ttable {
+            margin-top: 0px;
             color: #070707;
             font-size: large;
-            font-family: monospace;
+            font-family: Rajdhani;
             width: 100%;
             height: inherit;
             font-size: medium;
-            border-collapse: collapse;
-            border-radius: 10px;
-            outline: none;
+            /* border-collapse: collapse; */
             border: none;
         }
 
-        .Fheading {
-            margin: 0;
-            margin-top: -14px;
-            margin-bottom: 0px;
-            background-color: #040404;
-            height: 35px;
-            padding: 5px;
-            color: #f88605;
-            font-weight: 600;
-            font-size: x-large;
-            border-radius: 15px 50px 0px 0px;
+        td {
+            border: none;
+
         }
 
-        #Ftable {
-
-            margin-top: 35px;
-            padding: 0px;
-            color: #070707;
-            text-align: center;
-            font-size: large;
-            font-family: monospace;
+        .orderdata {
+            width: auto;
+            color: white;
+            padding: 3px;
             height: 100%;
-            width: 30vw;
-            border: 1px solid #f88605;
-            float: auto;
-            font-size: medium;
+            text-align: center;
+            font-weight: 300;
             background-color: #201f1f;
+            box-shadow: none;
+            border: none;
+            font-family: Rajdhani;
             border-collapse: collapse;
-            border-radius: 10px;
-            margin-left: 10px;
-            margin-right: 10px;
 
+            font-size: large;
         }
 
-        /* th {
-            color: aquamarine;
-            height: 35px;
-        } */
+        table {
+            border: none;
+        }
+
 
         .mainmenu {
             height: 100px;
@@ -181,10 +159,7 @@
 
 
 
-        tr {
-            border: 0.1px solid rgb(2, 23, 2);
-            border-collapse: collapse;
-        }
+
 
         span {
             font-size: small;
@@ -195,19 +170,6 @@
             margin-left: 15%;
         }
 
-        .feargreed {
-            border: 3px solid rgb(181, 122, 255);
-            border-radius: 20px;
-            padding: 10px;
-            max-width: 300px;
-            margin: 30px auto 0px;
-            height: 100%;
-            min-height: 60px;
-            position: relative;
-            color: wheat;
-            text-align: center;
-            font-size: larger;
-        }
 
         i {
             color: #f88605;
@@ -220,21 +182,19 @@
             font-size: medium;
         }
 
-        th {
+        th,
+        tfoot {
             background-color: #f88605;
             color: rgb(9, 9, 9);
             border: none;
             /* font-family: "Courier New", Courier, monospace; */
             text-decoration: solid;
-
             padding: 7px;
             font-weight: 900;
             font-size: large;
             position: static;
             top: 0px;
 
-            box-shadow: 6px 4px 3px 0px rgba(17, 16, 16, 0.322);
-            /* border-radius: 2px; */
         }
 
         a:link {
@@ -266,6 +226,8 @@
         }
 
         .coindetails {
+            align-items: center;
+            /* justify-content: center; */
             height: 15vh;
             width: 98%;
             margin-left: 10px;
@@ -282,11 +244,11 @@
 
         .detail {
             height: 18vh;
-
+            padding: 0px;
             width: 98%;
             margin-left: 10px;
             margin-right: 10px;
-            background-color: #201f1f;
+            background-color: black;
             display: flex;
             padding: 3px;
             padding-top: 20px;
@@ -297,21 +259,23 @@
         }
 
         .value {
-            height: 65%;
+            height: 60%;
             width: 30%;
-            ;
-            border: none;
+            overflow: hidden;
+            border: 1px ridge bla;
+            outline: none;
+            background-color: #2a2a2a;
             margin-top: 10px;
-            padding: 5px;
+            padding: 15px;
             text-align: center;
             margin-left: 2%;
-            border-radius: 2px;
+            /* border-radius: 2px; */
             color: aliceblue;
             text-align: center;
             padding: 5px;
             /* overflow-x: auto; */
             font-size: medium;
-            background-color: #323030;
+            /* background-color: #323030; */
             box-shadow: -1px -1px 1.5px 0px #7e7e7b, 1px 1px 1.5px 0px rgba(153, 152, 152, 0.322);
         }
 
@@ -342,14 +306,6 @@
             color: red;
         }
 
-        td {
-            height: 20px;
-            text-align: center;
-            font-size: small;
-            margin: 0;
-            border: none;
-            border-collapse: collapse;
-        }
 
         .tc {
             height: 50%;
@@ -392,7 +348,7 @@
             color: white;
             border: none;
             font-weight: 500;
-            font-family: sans-serif;
+            font-family: Rajdhani;
             background-color: #22ca19;
             ;
 
@@ -424,7 +380,8 @@
         * {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            border: none;
+            /* box-sizing: border-box; */
         }
 
         .fcontainer {
@@ -519,6 +476,7 @@
 
 
         .tds {
+            /*this is for add transaction button*/
             margin-bottom: 10px;
             border: 2px solid white;
             border: none;
@@ -527,83 +485,41 @@
             margin-top: 10px;
             text-align: left;
             color: white;
-            margin-bottom: 15px;
+            margin-bottom: 0px;
             margin-left: 20px;
             display: inline-block;
             /* background-color: #4d4b4b; */
         }
 
-        .fa-plus-circle:hover {
-            cursor: pointer;
-        }
 
-        .tdsvalue {
-            color: rgb(5, 5, 5);
-            padding: 3px;
-            font-weight: bolder;
-            font-size: large;
-            border: none;
-            background-color: #faf7f8;
-            height: 30px;
-            width: 150px;
-            text-align: center;
-            border-radius: 2px;
-            margin-bottom: 10px;
-        }
 
-        /*responsive*/
-        /* @media(max-width: 767px){
-      .footer-col{
-        width: 50%;
-        margin-bottom: 30px;
-    }
-    }
-    @media(max-width: 574px){
-      .footer-col{
-        width: 100%;
-    }
-    } */
+
+
         tfoot {
             border-radius: 0px 50px 0px 0px;
         }
 
-        .orderdata {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            color: white;
-            padding: 3px;
-            text-align: center;
-
-            background-color: #201f1f;
-            box-shadow: none;
-            border: none;
-            font-family: 'Signika Negative', sans-serif;
-
-            font-size: medium;
+        .fa-edit {
+            padding: 10px, 20px;
         }
 
-        .fundingdata {
-            margin: 0 !important;
-
-            border-radius: 0px;
-            box-shadow: -1px -1px 1.5px 0px #7e7e7b, 1px 1px 1.5px 0px rgba(153, 152, 152, 0.322);
+        .fa-times {
+            margin: 5%;
         }
+
+
 
         .orderdataid {
             width: 100%;
             height: 100%;
             margin: 0;
-            color: rgb(7, 7, 7);
             padding: 3px;
             text-align: center;
             font-weight: 600;
-            background-color: rgb(203, 202, 202);
-            box-shadow: none;
+            /* background-color: rgb(203, 202, 202); */
+            /* box-shadow: none */
             border: none;
-            font-family: 'Courier New', Courier, monospace;
-            font-weight: bolder;
-            font-size: medium;
+
         }
 
         .edit {
@@ -653,22 +569,6 @@
             color: #f71111;
         }
 
-        .green {
-            color: green;
-            /* width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 3px;
-            text-align: center;
-            font-weight: 600;
-            background-color: rgb(203, 202, 202);
-            box-shadow: none;
-            border: none;
-            font-family: 'Courier New', Courier, monospace;
-            font-weight: bolder;
-            font-size: medium; */
-        }
-
         .container {
             margin-top: 25px;
             display: flex;
@@ -692,9 +592,11 @@
             margin: 5px;
             margin-left: 10px;
             width: auto;
+            height: 12.5vh;
+            padding: 5px;
             padding: 10px;
             box-shadow: -2.1px -2.1px 1.5px 0px #686565, 2.1px 2.1px 1.5px 0px rgba(124, 122, 122, 0.96);
-            border-radius: 100px;
+            border-radius: 100%;
 
 
         }
@@ -703,10 +605,11 @@
             color: rgb(251, 253, 251);
             background-color: green;
             display: block;
-            width: auto;
-            height: auto;
-            padding: 3px;
-            border-radius: 100px;
+            height: 25px;
+            width: 35px;
+            text-align: center;
+            padding: 3px 7px;
+            border-radius: 5px;
             font-size: small;
         }
 
@@ -730,6 +633,8 @@
         .current-price {
             color: #f88605;
             font-size: x-large;
+            padding-left: 5px;
+            display: flex;
         }
 
         .redc {
@@ -743,6 +648,8 @@
         }
 
         .change {
+            align-self: center;
+            display: flex;
             width: auto;
             background-color: #060606;
             color: #d5d3d0;
@@ -790,26 +697,26 @@
         <!-- <coingecko-coin-price-marquee-widget  coin-ids="bitcoin,eos,ethereum,litecoin,ripple,biconomy,dog" currency="inr" background-color="#ffffff" locale="en"></coingecko-coin-price-marquee-widget> -->
     </div>
     <div class="coindetails">
-        <p style="color: rgb(0, 191, 255); padding: 5px;">
+        <p style="color: rgb(0, 191, 255); padding: 20px;">
             <%-CmcName-%>
                 <br>
                 <%-CmcSymbol-%>
         </p>
         <img src="<%-ImageSrc-%>" alt="" class="coin-logo">
 
-        <span class="current-price">
+        <div class="current-price">
             $ <%-parseFloat(CurrenPrice).toFixed(3)-%>
-        </span>
+        </div>
         <br>
         <span class="change24">
             <%if(ChangeIn24H<0) {%>
-                <p class="red">
+                <div class="red">
                     <%-parseFloat(ChangeIn24H).toFixed(2)-%> %
-                </p>
+                </div>
                 <%}else{%>
-                    <p class="green">
+                    <div class="green">
                         <%-parseFloat(ChangeIn24H).toFixed(2)-%> %
-                    </p>
+                    </div>
                     <%}%>
 
         </span>
@@ -868,40 +775,45 @@
     </div>
     <div class="detail">
         <div class="value">
-            <span style="font-size: small;"> Invested <br>
-                $ <%-parseFloat(SumInvested)-%>
-            </span>
+            Invested <br>
+            $ <%-parseFloat(SumInvested).toFixed(3)-%>
+
         </div>
         <div class="value">
-            <span title="Average Price" style="font-size: small;">A. price: $ <%-parseFloat(Avp).toFixed(3)-%>
-            </span>
+            <!-- <span style="font-size: small;" class=""> -->
+            Current value <br>
+            $ <%-parseFloat(holding*CurrenPrice).toFixed(2)-%>
+                <!-- </span> -->
+
         </div>
         <div class="value">
-            <span style="font-size: small;">Holding : <%- parseFloat(holding).toFixed(3)-%>
-            </span>
+            A. price <br> $ <%-parseFloat(Avp).toFixed(3)-%>
+
         </div>
         <div class="value">
-            <span style="font-size: small;">Volume : <%- parseFloat(volume).toFixed(3)-%>
-            </span>
+            Holding <br>
+            <%- parseFloat(holding).toFixed(3)-%>
+                <%-CmcSymbol-%>
+
         </div>
-        <div class="pnl">
-            <span style="font-size: small;" class="">
-                Current value : <br>
-                $ <%-parseFloat(holding*CurrenPrice).toFixed(2)-%>
-            </span>
-            <p style="font-size: small;" class="pnlR">
-            </p>
+        <div class="value">
+            Volume <br>
+            <%- parseFloat(volume).toFixed(3)-%>
+                <%-CmcSymbol-%>
+                    <!-- <span style="font-size: small;">Volume : <%- parseFloat(volume).toFixed(3)-%> <%-CmcSymbol-%> -->
+
         </div>
-        <div class="pnl" style="margin-right:10px ;">
-            <% if(TotalPNLD>0){%>
+
+        <div class="value" style="margin-right:10px ;">
+            <% if(TotalPNLP>0){%>
 
                 PNL:
-                $ <%-parseFloat(TotalPNLD).toFixed(2)-%>
+                $ <%-parseFloat((TotalPNLP*SumInvested) /100).toFixed(2)-%>
                     <p class="pnlG">(<%-parseFloat(TotalPNLP).toFixed(2)-%> % )</p>
 
                     <%}else{%>
                         PNL:
-                        $ <%-parseFloat(TotalPNLD).toFixed(2)-%>
+                        $ <%-parseFloat(TotalPNLP*SumInvested).toFixed(2) /100-%>
                             <p class="pnlR">(<%-parseFloat(TotalPNLP).toFixed(2)-%> % )</p>
                             <%}%>
 
@@ -918,7 +830,7 @@
         <table id=" Ttable" style="width: 100%;">
             <tr>
 
-                <th>ORDER TYPE</th>
+                <th style="border-radius: 10px 0px 0px 0px;">ORDER TYPE</th>
                 <th>PRICE</th>
                 <th>UNITS</th>
                 <th>COST</th>
@@ -926,33 +838,55 @@
 
                 <th style="border-radius: 0px 10px 0px 0px;">ACTION</th>
             <tr>
-                <% if( results.length> 0 ){ %>
-                    <% for(var i=0 ;i < results.length;i++){ %>
+                <% var totalUNITS=0,TotalCOST=0;%>
+                    <% if( results.length> 0 ){ %>
+                        <% for(var i=0 ;i < results.length;i++){ totalUNITS+=parseFloat(results[i].UNITS);
+                            TotalCOST+=parseFloat(results[i].TOTAL_COST )%>
             <tr>
                 <form id="deleteForm" method="post">
 
-                    <td><input class="orderdata" name="price" title="Order Type  : '<%- results[i].ORDER_TYPE -%>'"
-                            type="text" value="<%- results[i].ORDER_TYPE.toUpperCase () -%>" disabled /></td>
+                    <td class="orderdata">
+                        <%- results[i].ORDER_TYPE.toUpperCase () -%>
+                    </td>
 
-                    <td><input class="orderdata" name="units" type="text"
-                            title="UNITS  :'<%- results[i].PRICE -%>' <td><input class=" orderdata" name="price"
-                            value="<%-results[i].PRICE -%>" disabled /></td>
+                    <td class="orderdata">
+                        <%-results[i].PRICE -%>
+                    </td>
 
-                    <td><input class="orderdata" name="price" title="Price : '<%- results[i].UNITS -%>'" type="text"
-                            value="<%- results[i].UNITS -%>" disabled /></td>
+                    <td class="orderdata">
+                        <%- results[i].UNITS -%>
+                    </td>
 
-                    <td><input class="orderdata" name="Total_cost" title="Total Cost : '<%- results[i].TOTAL_COST -%>'"
-                            type="text" value="<%- results[i].TOTAL_COST -%>" disabled /></td>
+                    <td class="orderdata">
+                        <%- results[i].TOTAL_COST -%>
+                    </td>
 
-                    <td><input class="orderdata" name="SEll_cost" title="Selling Cost : '<%- results[i].SELL_COST -%>'"
-                            type="text" value="<%- results[i].SELL_COST -%>" disabled /></td>
+                    <td class="orderdata">
+                        <%- results[i].SELL_COST -%>
+                    </td>
                 </form>
                 <!-- onclick="s('<%- results[i].ORDER_TYPE -%>','<%- results[i].PRICE -%>','<%- results[i].UNITS -%>','<%- results[i].TOTAL_COST -%>','<%- results[i].SELL_COST -%>')" -->
                 <td><a onclick="deleteTransaction(`<%- results[i].ID-%>`,`<%- results[i].Coin_Name-%>`)"
                         class="fas fa-times"></a> ,<a onclick="edit()" href="/update?id=<%- results[i].ID-%>"
                         class="far fa-edit"></a></td>
             </tr>
+
             <%}%>
+                <tfoot style="text-align: center;">
+
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <%-totalUNITS-%>
+                            <%- CmcSymbol-%>
+                    </td>
+                    <td style="font-size: x-large;">
+                        $ <%-TotalCOST-%>
+                    </td>
+                    <td></td>
+                    <td></td>
+
+                </tfoot>
                 <%}else{ i=1 %>
                     <h1>No Transaction Found</h1>
                     <script>
@@ -1042,7 +976,7 @@
         </div>
     </footer>
     <script>
-
+        console.log("<%-FinalData-%>")
         var Garray = [];
         var Carray = [];
 
@@ -1054,7 +988,7 @@
         }
         function ShowOptions() {
             swal.fire({
-                html: ` <h3 class="h1a">Add Transaction </h3> <br> <div class= "buttons" ><button id="funding" class="fundingB">Funding</button><button id="buysell"
+                html: ` <h3 style="color:#f88605;">Add Transaction </h3> <br> <div class= "buttons" ><button id="funding" class="fundingB">Funding</button><button id="buysell"
                      class="buysell">Buy/Sell</button</div> `,
                 showConfirmButton: false,
                 allowEscapeKey: false,
@@ -1074,7 +1008,7 @@
                 window.location = "/portfolio"
             })
         }
-
+        console.log("PNL :<%-parseFloat(SumInvested).toFixed(2)-%>")
 
         function deleteTransaction(id, Asset) {
             Swal.fire({
